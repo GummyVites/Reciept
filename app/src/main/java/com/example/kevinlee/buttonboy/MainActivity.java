@@ -30,19 +30,31 @@ public class MainActivity extends AppCompatActivity {
                             case 0:
                                 startActivity(new Intent(MainActivity.this, cameraActivity.class));
                                 break;
+                            // Camera
                             case 1:
 
                                 break;
+                            //paypal
                             case 2:
 
                                 break;
+                            //receipt
                             case 3:
 
                                 break;
+                            //linechart
                             case 4:
 
                                 break;
+                            // piechart
+                            case 5:
 
+                                break;
+                            //screenshot
+                            case 6:
+
+                                break;
+                            
                         }
                     }
                 });
