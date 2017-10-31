@@ -28,21 +28,19 @@ public class MainActivity extends AppCompatActivity {
                     public void onMenuSelected(int index) {
                         switch (index) {
                             case 0:
-                                Toast.makeText(MainActivity.this, "Camera Button Clicked", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(MainActivity.this, cameraActivity.class));
                                 break;
                             case 1:
-                                Toast.makeText(MainActivity.this, "Paypal Button Clicked", Toast.LENGTH_SHORT).show();
+
                                 break;
                             case 2:
-                                Toast.makeText(MainActivity.this, "Receipt button Clicked", Toast.LENGTH_SHORT).show();
+
                                 break;
                             case 3:
-                                Toast.makeText(MainActivity.this, "LineChart Button Clicked ", Toast.LENGTH_SHORT).show();
 
                                 break;
                             case 4:
-                                Toast.makeText(MainActivity.this, "Pie Chart Button Clicked", Toast.LENGTH_SHORT).show();
+
                                 break;
 
                         }

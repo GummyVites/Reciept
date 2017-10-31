@@ -6,4 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.kevinlee.buttonboy.cameraActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView1"/>
+
 </android.support.constraint.ConstraintLayout>
