@@ -27,34 +27,26 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onMenuSelected(int index) {
                         switch (index) {
+                            // Camera
                             case 0:
                                 startActivity(new Intent(MainActivity.this, cameraActivity.class));
                                 break;
-                            // Camera
-                            case 1:
-
-                                break;
                             //paypal
-                            case 2:
-
+                            case 1:
                                 break;
                             //receipt
-                            case 3:
-
+                            case 2:
                                 break;
                             //linechart
-                            case 4:
-
+                            case 3:
                                 break;
                             // piechart
-                            case 5:
-
+                            case 4:
                                 break;
                             //screenshot
-                            case 6:
-
+                            case 5:
+                                Toast.makeText(MainActivity.this, "Screen shot clicked", Toast.LENGTH_SHORT).show();
                                 break;
-                            
                         }
                     }
                 });
