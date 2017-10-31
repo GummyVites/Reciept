@@ -1,6 +1,7 @@
 package com.example.kevinlee.buttonboy;
 
 import android.graphics.Color;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -10,6 +11,8 @@ import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int PICK_IMAGE = 101;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,18 +43,23 @@ public class MainActivity extends AppCompatActivity {
                             //linechart
                             case 3:
                                 break;
-                            // piechart
+                            //piechart
                             case 4:
                                 break;
                             //screenshot
                             case 5:
-                                Toast.makeText(MainActivity.this, "Screen shot clicked", Toast.LENGTH_SHORT).show();
+                                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                                startActivityForResult(gallery, PICK_IMAGE);
                                 break;
+                            //screenshot
+
+
                         }
                     }
                 });
 
                 }
+
 
 
     }
