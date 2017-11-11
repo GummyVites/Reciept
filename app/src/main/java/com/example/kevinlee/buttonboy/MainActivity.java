@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             //paypal
                             case 1:
+                                startActivity(new Intent(MainActivity.this, OCRActivity.class));
                                 break;
                             //receipt
                             case 2:

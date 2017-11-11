@@ -28,5 +28,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.cuboid:cuboidcirclebutton:1.0.3'
     compile 'com.github.Hitomis:CircleMenu:v1.1.0'
+    compile 'com.rmtheis:tess-two:5.4.1'
     testCompile 'junit:junit:4.12'
 }
