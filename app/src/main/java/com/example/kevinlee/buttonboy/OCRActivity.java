@@ -19,7 +19,7 @@ import java.io.InputStream;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
-
+import android.app.Activity;
 import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
 
@@ -96,6 +96,8 @@ public class OCRActivity extends AppCompatActivity {
             InputStream is = new ByteArrayInputStream(b);
             bitmap = BitmapFactory.decodeStream(is);
         }
+        ImageView img = (ImageView) findViewById(R.id.imageView);
+        img.setImageBitmap(bitmap);
         String temp = TessOCR.getOCRResult(bitmap);
         TextView tv1 = (TextView)findViewById(R.id.textView);
         tv1.setText(temp);

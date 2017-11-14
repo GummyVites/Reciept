@@ -20,11 +20,9 @@ import java.io.ByteArrayOutputStream;
 public class cameraActivity extends AppCompatActivity {
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
-    public ImageView mImage;
-    public Uri mImageUri;
+
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private ImageView imageview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +30,6 @@ public class cameraActivity extends AppCompatActivity {
         //checkPermissions();
         setContentView(R.layout.activity_camera);
         dispatchTakePictureIntent();
-
     }
 
     /*private void checkPermissions() {
