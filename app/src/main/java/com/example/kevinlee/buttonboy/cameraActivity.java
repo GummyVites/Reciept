@@ -29,19 +29,19 @@ public class cameraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkPermissions();
+        //checkPermissions();
         setContentView(R.layout.activity_camera);
         dispatchTakePictureIntent();
-        this.imageview = (ImageView)this.findViewById(R.id.imageView1);
+
     }
 
-    private void checkPermissions() {
+    /*private void checkPermissions() {
         int hasCameraPermissions = checkSelfPermission(Manifest.permission.CAMERA);
         if (hasCameraPermissions != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[] {Manifest.permission.CAMERA},
                     REQUEST_CODE_ASK_PERMISSIONS);
         }
-    }
+    }*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -64,6 +64,7 @@ public class cameraActivity extends AppCompatActivity {
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
