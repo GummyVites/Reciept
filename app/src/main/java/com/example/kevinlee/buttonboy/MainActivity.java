@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             //receipt
                             case 2:
+                                startActivity(new Intent(MainActivity.this, splitBill.class));
                                 break;
                             //linechart
                             case 3:
