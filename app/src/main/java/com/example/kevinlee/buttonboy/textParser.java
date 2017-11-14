@@ -11,7 +11,7 @@ public class textParser {
     private ArrayList<String> itemList = new ArrayList<>();
     private ArrayList<Float> priceList = new ArrayList<>();
 
-    private final String priceRegex = "(.+)(\\d+[,.][0-9][0-9])";
+    private final String priceRegex = "(.+)(\\W+)(\\d+[,.]\\d\\d)";
 //    final String subtotalRegex="^([Ss][Uu][Bb][Tt][Oo][Tt][Aa][Ll]) +(\\s) +(\\d+([,.][0-9][0-9]))$";
 //    final String taxRegex="^([Tt][Aa][Xx][Ee]?[Ss]?)+(\\s)+(\\d+([,.][0-9][0-9]))$";
 //    final String totalRegex="^([Tt][Oo][Tt][Aa][Ll])+(\\s)+(\\d+([,.][0-9][0-9]))$";
@@ -29,7 +29,7 @@ public class textParser {
 
         while (matcher.find()) {
             itemList.add(matcher.group(1));
-            priceList.add(Float.valueOf(matcher.group(2)));
+            priceList.add(Float.valueOf(matcher.group(3)));
         }
     }
     // Each outer loop is a different line

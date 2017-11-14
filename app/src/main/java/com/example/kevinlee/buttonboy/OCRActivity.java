@@ -93,12 +93,18 @@ public class OCRActivity extends AppCompatActivity {
     }
 
     public void processImage(){
-        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.receipt1);
+        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.receipt2);
         String temp = TessOCR.getOCRResult(image);
         textParser parser = new textParser(temp);
         Log.i("MEMEEEEE", temp);
-//        ArrayList<String> itemlist = parser.getItemList();
-//        ArrayList<Float> priceList = parser.getPriceList();
+        ArrayList<String> itemList = parser.getItemList();
+        ArrayList<Float> priceList = parser.getPriceList();
+        for (String item : itemList){
+            Log.i("ITSME", item);
+        }
+        for(Float item: priceList){
+            Log.i("ITSME", item.toString());
+        }
         TextView tv1 = (TextView)findViewById(R.id.textView);
         tv1.setText(temp);
     }
