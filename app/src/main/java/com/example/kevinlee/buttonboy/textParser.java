@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 
 public class textParser {
 
-    private ArrayList<String[]> itemList = new ArrayList<>();
-    private ArrayList<String> stringList = new ArrayList<>();
+    private ArrayList<String[]> list = new ArrayList<>();
+    private ArrayList<String> itemList = new ArrayList<>();
     private ArrayList<Float> priceList = new ArrayList<>();
 
     private final String priceRegex = "(.+)(\\d+[,.][0-9][0-9])";
@@ -28,18 +28,18 @@ public class textParser {
         final Matcher matcher = pattern.matcher(text);
 
         while (matcher.find()) {
-            stringList.add(matcher.group(1));
+            itemList.add(matcher.group(1));
             priceList.add(Float.valueOf(matcher.group(2)));
         }
     }
     // Each outer loop is a different line
     // Each inner loop is a different word
     public String getItem(int sentIndex, int wordIndex){
-        return itemList.get(sentIndex)[wordIndex];
+        return list.get(sentIndex)[wordIndex];
     }
 
-    public ArrayList<String> getStringList(){
-        return stringList;
+    public ArrayList<String> getItemList(){
+        return itemList;
     }
     public ArrayList<Float> getPriceList(){
         return  priceList;

@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,11 +17,15 @@ import android.util.Base64;
 import java.io.ByteArrayInputStream;
 import com.googlecode.tesseract.android.TessBaseAPI;
 import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 import android.app.Activity;
 import io.netopen.hotbitmapgg.library.view.RingProgressBar;
+
 
 
 public class OCRActivity extends AppCompatActivity {
@@ -38,7 +43,7 @@ public class OCRActivity extends AppCompatActivity {
         public void handleMessage (Message msg){
         if (msg.what == 0) {
             if (progress < 100) {
-                progress++;
+                progress+=20;
                 mRingProgressBar.setProgress(progress);
             }
         }
@@ -51,11 +56,12 @@ public class OCRActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocr);
         TessOCR = new TessOCR(OCRActivity.this,"eng");
+        //setPicture();
         Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-
+                processImage();
                 mRingProgressBar = (RingProgressBar) findViewById(R.id.progress_bar_2);
                 mRingProgressBar.setProgress(progress);
                 mRingProgressBar.setOnProgressListener(new RingProgressBar.OnProgressListener(){
@@ -70,7 +76,7 @@ public class OCRActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        for (int i =0; i<100; i++){
+                        for (int i =0; i<100; i+=20){
                             try{
                                 Thread.sleep(100);
                                 myHandler.sendEmptyMessage(0);
@@ -86,21 +92,28 @@ public class OCRActivity extends AppCompatActivity {
         });
     }
 
-    public void processImage(View view){
-        SharedPreferences shared = getSharedPreferences("MyApp_Settings", MODE_PRIVATE);
-        String photo = shared.getString("PRODUCT_PHOTO", "photo");
-        assert photo != null;
+    public void processImage(){
+        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.receipt1);
+        String temp = TessOCR.getOCRResult(image);
+        textParser parser = new textParser(temp);
+        Log.i("MEMEEEEE", temp);
+//        ArrayList<String> itemlist = parser.getItemList();
+//        ArrayList<Float> priceList = parser.getPriceList();
+        TextView tv1 = (TextView)findViewById(R.id.textView);
+        tv1.setText(temp);
+    }
+
+    public void setPicture(){
+        SharedPreferences editor = getSharedPreferences("LOL", MODE_PRIVATE);
+        String photo = editor.getString("SENDPHOTO", "none");
         if(!photo.equals("photo"))
         {
             byte[] b = Base64.decode(photo, Base64.DEFAULT);
             InputStream is = new ByteArrayInputStream(b);
             bitmap = BitmapFactory.decodeStream(is);
+            //ImageView img = (ImageView) findViewById(R.id.imageView4);
+            //img.setImageBitmap(bitmap);
         }
-        ImageView img = (ImageView) findViewById(R.id.imageView);
-        img.setImageBitmap(bitmap);
-        String temp = TessOCR.getOCRResult(bitmap);
-        TextView tv1 = (TextView)findViewById(R.id.textView);
-        tv1.setText(temp);
     }
 
 }

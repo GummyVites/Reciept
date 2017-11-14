@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.content.Intent;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.ImageView;
 import android.view.View;
 import android.content.SharedPreferences;
@@ -27,18 +28,18 @@ public class cameraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //checkPermissions();
+        checkPermissions();
         setContentView(R.layout.activity_camera);
         dispatchTakePictureIntent();
     }
 
-    /*private void checkPermissions() {
+    private void checkPermissions() {
         int hasCameraPermissions = checkSelfPermission(Manifest.permission.CAMERA);
         if (hasCameraPermissions != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[] {Manifest.permission.CAMERA},
                     REQUEST_CODE_ASK_PERMISSIONS);
         }
-    }*/
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -64,6 +65,7 @@ public class cameraActivity extends AppCompatActivity {
 
     }
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             if (data != null) {
@@ -74,10 +76,10 @@ public class cameraActivity extends AppCompatActivity {
                 picture.compress(Bitmap.CompressFormat.PNG, 100, baos);
                 byte[] b = baos.toByteArray();
                 String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-                SharedPreferences shared = getSharedPreferences("MyApp_settings", MODE_PRIVATE);
-                SharedPreferences.Editor editor = shared.edit();
-                editor.putString("PRODUCT_PHOTO", imageEncoded);
-                editor.commit();
+                //Log.i("ITS IN", imageEncoded);
+                SharedPreferences.Editor editor = getSharedPreferences("LOL", MODE_PRIVATE).edit();
+                editor.putString("SENDPHOTO", imageEncoded);
+                editor.apply();
 
 
                 // Sets the ImageView with the Image URI
