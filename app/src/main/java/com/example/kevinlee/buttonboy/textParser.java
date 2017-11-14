@@ -1,30 +1,52 @@
 package com.example.kevinlee.buttonboy;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-/**
- * Created by Kraken on 11/13/17.
- */
 
 public class textParser {
 
-    ArrayList<String[]> itemList = new ArrayList<>();
+    private ArrayList<String[]> itemList = new ArrayList<>();
+    private ArrayList<String> stringList = new ArrayList<>();
+    private ArrayList<Float> priceList = new ArrayList<>();
+
+    private final String priceRegex = "(.+)(\\d+[,.][0-9][0-9])";
+//    final String subtotalRegex="^([Ss][Uu][Bb][Tt][Oo][Tt][Aa][Ll]) +(\\s) +(\\d+([,.][0-9][0-9]))$";
+//    final String taxRegex="^([Tt][Aa][Xx][Ee]?[Ss]?)+(\\s)+(\\d+([,.][0-9][0-9]))$";
+//    final String totalRegex="^([Tt][Oo][Tt][Aa][Ll])+(\\s)+(\\d+([,.][0-9][0-9]))$";
+
 
     //Splits text by newline and then space
     public textParser(String text){
-        String lines[] = text.split("\\r?\\n");
-        for (int line=0; line<lines.length; line++) {
-            itemList.add(lines[line].split("\\s+"));
+//        String lines[] = text.split("\\r?\\n");
+//        for (int line=0; line<lines.length; line++) {
+//            itemList.add(lines[line].split("\\s+"));
+//        }
+
+        final Pattern pattern = Pattern.compile(priceRegex);
+        final Matcher matcher = pattern.matcher(text);
+
+        while (matcher.find()) {
+            stringList.add(matcher.group(1));
+            priceList.add(Float.valueOf(matcher.group(2)));
         }
     }
     // Each outer loop is a different line
     // Each inner loop is a different word
-    public ArrayList<String[]> getList(){
-        return itemList;
-    }
-
     public String getItem(int sentIndex, int wordIndex){
         return itemList.get(sentIndex)[wordIndex];
     }
+
+    public ArrayList<String> getStringList(){
+        return stringList;
+    }
+    public ArrayList<Float> getPriceList(){
+        return  priceList;
+    }
+
+
+
+
+
 }
