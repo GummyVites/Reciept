@@ -58,7 +58,7 @@ public class OCRActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ocr);
         TessOCR = new TessOCR(OCRActivity.this,"eng");
         //setPicture();
-        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.receipt2);
+        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.receipt1);
         ImageView iv = (ImageView)findViewById(R.id.imageView);
         iv.setImageBitmap(image);
         Button button = (Button) findViewById(R.id.button);
@@ -97,20 +97,24 @@ public class OCRActivity extends AppCompatActivity {
     }
 
     public void processImage(){
-        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.receipt2);
+        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.receipt1);
         String temp = TessOCR.getOCRResult(image);
         textParser parser = new textParser(temp);
-        Log.i("MEMEEEEE", temp);
+
         ArrayList<String> itemList = parser.getItemList();
         ArrayList<Float> priceList = parser.getPriceList();
-        for (String item : itemList){
-            Log.i("ITSME", item);
-        }
-        for(Float item: priceList){
-            Log.i("ITSME", item.toString());
-        }
+
+//        Log.i("MEMEEEEE", temp);
+//
+//        for (String item : itemList){
+//            Log.i("ITSME", item);
+//        }
+//        for(Float item: priceList){
+//            Log.i("ITSME", item.toString());
+//        }
         TextView tv1 = (TextView)findViewById(R.id.textView);
         tv1.setText(temp);
+
 
         receipt receipt = new receipt();
         receipt.setItemNames(itemList);

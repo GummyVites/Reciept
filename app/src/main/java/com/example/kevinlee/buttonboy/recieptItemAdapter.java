@@ -50,12 +50,16 @@ public class recieptItemAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.receipt_item, null);
         }
         ArrayList<friends> myFriends = new ArrayList<friends>();
-        friends jonsnow = new friends();
-        friends danny = new friends();
-        jonsnow.name = "Jon Snow";
-        danny.name = "Danny";
-        myFriends.add(jonsnow);
-        myFriends.add(danny);
+        friends Baiwen = new friends("Baiwen");
+        friends Kevin = new friends("Kevin");
+        friends Shyaan = new friends("Shyaan");
+        friends Chris = new friends("Chris");
+        myFriends.add(Baiwen);
+        myFriends.add(Kevin);
+        myFriends.add(Shyaan);
+        myFriends.add(Chris);
+
+
         friendsSelectorAdapter friendsSelectorAdapter = new friendsSelectorAdapter(myFriends, context);
 
         ListView friendsList = (ListView)view.findViewById(R.id.friend_selector);

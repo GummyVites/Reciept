@@ -23,9 +23,10 @@ public class splitBill extends AppCompatActivity {
         setContentView(R.layout.activity_split_bill);
 
         ArrayList<receipt> list = new ArrayList<receipt>();
-        for (int i = 1; i <= 10; ++i) {
+        String[] names = {"Baiwen Huang", "Kevin Lee", "Shyaan Khan", "Chris Evans"};
+        for (int i = 0; i <= 3; ++i) {
             receipt temp = new receipt();
-            temp.name = "Hodor " + i;
+            temp.name = names[i];
             temp.itemPrices = new ArrayList<Float>();
             temp.itemNames = new ArrayList<String>();
             for (int j=0; j<i; ++j) {
