@@ -17,8 +17,6 @@ public class friendsSelectorAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<friends> list = new ArrayList<friends>();
     private Context context;
 
-
-
     public friendsSelectorAdapter(ArrayList<friends> list, Context context) {
         this.list = list;
         this.context = context;

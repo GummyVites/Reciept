@@ -18,7 +18,7 @@ public class splitReceipt extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_split_receipt);
         receipt tempReceipt = new receipt();
-        tempReceipt = tempReceipt.load(splitReceipt.this);
+        tempReceipt = tempReceipt.load(splitReceipt.this,"lists");
 
         ArrayList<item> items= new ArrayList<item>();
         for (int i =0; i<tempReceipt.itemPrices.size(); ++i) {

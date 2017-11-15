@@ -5,6 +5,7 @@ package com.example.kevinlee.buttonboy;
         import java.io.ObjectInputStream;
         import java.io.ObjectOutputStream;
         import java.io.Serializable;
+        import java.util.ArrayList;
         import java.util.List;
 
 public class receipt implements Serializable {
@@ -13,9 +14,9 @@ public class receipt implements Serializable {
     public List<Float> itemPrices;
 
 
-    public receipt load (Context ctx) {
+    public receipt load (Context ctx,String filename) {
         ObjectInputStream in;
-        String filename = "receipt";
+//        String filename = "receipt";
         receipt temp =null;
         try {
             in = new ObjectInputStream(ctx.openFileInput(filename));
@@ -28,10 +29,10 @@ public class receipt implements Serializable {
         return temp;
     }
 
-    public void saveReciept (Context ctx) {
+    public void saveReceipt (Context ctx,String filename) {
         ObjectOutputStream out;
 
-        String filename = "receipt";
+//        String filename = "receipt";
         try {
             out = new ObjectOutputStream(ctx.openFileOutput(filename, Context.MODE_PRIVATE));
             out.writeObject(this);
@@ -40,5 +41,13 @@ public class receipt implements Serializable {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setItemNames(ArrayList<String> array){
+        this.itemNames = array;
+    }
+
+    public void setItemPrices(ArrayList<Float> array){
+        this.itemPrices = array;
     }
 }

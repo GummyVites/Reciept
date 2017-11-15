@@ -1,6 +1,7 @@
 package com.example.kevinlee.buttonboy;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -57,6 +58,9 @@ public class OCRActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ocr);
         TessOCR = new TessOCR(OCRActivity.this,"eng");
         //setPicture();
+        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.receipt2);
+        ImageView iv = (ImageView)findViewById(R.id.imageView);
+        iv.setImageBitmap(image);
         Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new OnClickListener() {
 
@@ -107,6 +111,11 @@ public class OCRActivity extends AppCompatActivity {
         }
         TextView tv1 = (TextView)findViewById(R.id.textView);
         tv1.setText(temp);
+
+        receipt receipt = new receipt();
+        receipt.setItemNames(itemList);
+        receipt.setItemPrices(priceList);
+        receipt.saveReceipt(OCRActivity.this,"lists");
     }
 
     public void setPicture(){

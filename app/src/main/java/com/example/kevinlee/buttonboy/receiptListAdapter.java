@@ -60,7 +60,7 @@ public class receiptListAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, splitReceipt.class);
-                list.get(position).saveReciept(context);
+                list.get(position).saveReceipt(context,"receipt");
                 context.startActivity(i);
             }
         });
