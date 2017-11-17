@@ -57,10 +57,10 @@ public class OCRActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocr);
         TessOCR = new TessOCR(OCRActivity.this,"eng");
-        //setPicture();
-        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.receipt1);
-        ImageView iv = (ImageView)findViewById(R.id.imageView);
-        iv.setImageBitmap(image);
+        setPicture();
+        //Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.receipt1);
+        //ImageView iv = (ImageView)findViewById(R.id.imageView);
+        //iv.setImageBitmap(image);
         Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new OnClickListener() {
 
@@ -97,6 +97,17 @@ public class OCRActivity extends AppCompatActivity {
     }
 
     public void processImage(){
+        // ONLY UNCOMMENT FOR REAL DEMOS
+        /*SharedPreferences editor = getSharedPreferences("LOL", MODE_PRIVATE);
+        String photo = editor.getString("SENDPHOTO", "none");
+        if(!photo.equals("photo"))
+        {
+            byte[] b = Base64.decode(photo, Base64.DEFAULT);
+            InputStream is = new ByteArrayInputStream(b);
+            bitmap = BitmapFactory.decodeStream(is);
+        }*/
+        //String temp = TessOCR.getOCRResult(bitmap);
+
         Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.receipt1);
         String temp = TessOCR.getOCRResult(image);
         textParser parser = new textParser(temp);
@@ -130,8 +141,8 @@ public class OCRActivity extends AppCompatActivity {
             byte[] b = Base64.decode(photo, Base64.DEFAULT);
             InputStream is = new ByteArrayInputStream(b);
             bitmap = BitmapFactory.decodeStream(is);
-            //ImageView img = (ImageView) findViewById(R.id.imageView4);
-            //img.setImageBitmap(bitmap);
+            ImageView img = (ImageView) findViewById(R.id.imageView);
+            img.setImageBitmap(bitmap);
         }
     }
 
