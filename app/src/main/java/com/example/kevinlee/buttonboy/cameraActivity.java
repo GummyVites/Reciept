@@ -16,14 +16,15 @@ import android.view.View;
 import android.content.SharedPreferences;
 import android.net.Uri;
 
+import com.soundcloud.android.crop.Crop;
+
 import java.io.ByteArrayOutputStream;
 
 public class cameraActivity extends AppCompatActivity {
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
-
-
-
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    public Uri finishedUri = null;
+    public Bitmap picture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +70,19 @@ public class cameraActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             if (data != null) {
+                if (requestCode == Crop.REQUEST_CROP && resultCode == RESULT_OK) {
+                    Uri imageUri = data.getData();
+                    Crop.of(imageUri, finishedUri).asSquare().start(this);
+                    finishedUri = Crop.getOutput(data);
+                }
+                try {
+                    Bitmap picture = MediaStore.Images.Media.getBitmap(this.getContentResolver(), finishedUri);
+                }catch(Exception e) {
 
-                Bitmap picture = (Bitmap) data.getExtras().get("data");
+                }
+
+
+                //Bitmap picture = (Bitmap) data.getExtras().get("data");
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
                 picture.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -82,11 +94,13 @@ public class cameraActivity extends AppCompatActivity {
                 editor.apply();
 
 
+
                 // Sets the ImageView with the Image URI
                 startActivity(new Intent(cameraActivity.this, OCRActivity.class));
             }
         }
     }
+
 
 
 }

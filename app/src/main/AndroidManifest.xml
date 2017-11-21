@@ -6,7 +6,8 @@
 
     <uses-feature android:name="android.hardware.camera" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -24,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".cameraActivity" />
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
         <activity android:name=".OCRActivity" />
         <activity android:name=".splitBill" />
         <activity android:name=".splitReceipt"></activity>
