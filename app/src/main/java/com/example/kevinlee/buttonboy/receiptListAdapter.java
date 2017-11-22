@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.Set;
 public class receiptListAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<receipt> list = new ArrayList<receipt>();
     private Context context;
+
 
 
 
@@ -51,7 +53,10 @@ public class receiptListAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.list_item, null);
         }
 
-        TextView listItemText = (TextView)view.findViewById(R.id.list_item_string);
+        RadioButton checkFriends = (RadioButton) view.findViewById(R.id.checkFriend);
+        checkFriends.setText(list.get(position).name);
+
+        /*TextView listItemText = (TextView)view.findViewById(R.id.list_item_string);
         listItemText.setText(list.get(position).name);
 
         Button splitBtn = (Button)view.findViewById(R.id.splitBtn);
@@ -64,7 +69,7 @@ public class receiptListAdapter extends BaseAdapter implements ListAdapter {
                 context.startActivity(i);
             }
         });
-
+*/
         return view;
     }
 }
