@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kevinlee.buttonboy.splitBill"
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
+
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="480dp"
+        app:layout_constraintTop_toBottomOf="@id/selectFriendsTitle"
+        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_bias="1.0"
+
+        />
+
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/selectFriendsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Your Friends"
+        android:gravity="center"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        />
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/plus_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        fab:fab_colorNormal="#6BB0D1"
+        fab:fab_colorPressed="#2F9DC9"
+        fab:fab_icon="@drawable/plus3"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_marginRight="30dp"
+        tools:layout_marginBottom="50dp"
+        />
+
+</android.support.constraint.ConstraintLayout>

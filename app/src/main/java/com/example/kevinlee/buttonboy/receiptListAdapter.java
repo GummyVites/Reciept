@@ -5,13 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.hitomi.cmlibrary.CircleMenu;
+import com.uniquestudio.library.CircleCheckBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +26,7 @@ import java.util.Set;
 public class receiptListAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<receipt> list = new ArrayList<receipt>();
     private Context context;
-
+    CircleCheckBox circleCheck;
 
 
     public receiptListAdapter(ArrayList<receipt> list, Context context) {
@@ -51,10 +57,13 @@ public class receiptListAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.list_item, null);
         }
 
-        TextView listItemText = (TextView)view.findViewById(R.id.list_item_string);
-        listItemText.setText(list.get(position).name);
+        RadioButton checkFriends = (RadioButton) view.findViewById(R.id.checkFriend);
+        checkFriends.setText(list.get(position).name);
+        //checkFriends.setTextSize(30);
 
-        Button splitBtn = (Button)view.findViewById(R.id.splitBtn);
+        //circleCheck = (CircleCheckBox) view.findViewById(R.id.circleCheck);
+
+        /*Button splitBtn = (Button)view.findViewById(R.id.splitBtn);
 
         splitBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -63,8 +72,10 @@ public class receiptListAdapter extends BaseAdapter implements ListAdapter {
                 list.get(position).saveReceipt(context,"receipt");
                 context.startActivity(i);
             }
-        });
+        });*/
+
 
         return view;
     }
 }
+

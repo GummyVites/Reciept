@@ -7,7 +7,7 @@
     tools:context="com.example.kevinlee.buttonboy.splitBill">
 
     <ListView
-        android:id="@+id/listview"
+        android:id="@+id/listview1"
         android:layout_width="match_parent"
         android:layout_height="421dp"
         android:layout_alignParentBottom="true"
@@ -18,11 +18,13 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/doneBtn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></ListView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"></ListView>
 
     <Button
-        android:id="@+id/doneBtn"
+        android:id="@+id/doneBtn1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -32,6 +34,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 
 </android.support.constraint.ConstraintLayout>
