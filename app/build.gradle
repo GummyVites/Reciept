@@ -30,6 +30,7 @@ dependencies {
     compile 'com.github.Hitomis:CircleMenu:v1.1.0'
     compile 'com.rmtheis:tess-two:5.4.1'
     compile 'com.github.HotBitmapGG:RingProgressBar:V1.2.3'
+    compile 'com.theartofdev.edmodo:android-image-cropper:2.5.+'
     compile 'com.soundcloud.android:android-crop:1.0.1@aar'
 
     testCompile 'junit:junit:4.12'

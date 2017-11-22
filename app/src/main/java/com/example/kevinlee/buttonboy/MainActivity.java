@@ -50,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             //screenshot
                             case 5:
-                                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                                startActivityForResult(gallery, PICK_IMAGE);
+                                startActivity(new Intent(MainActivity.this, cropper.class));
                                 break;
                             //screenshot
 
