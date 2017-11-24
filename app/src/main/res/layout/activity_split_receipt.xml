@@ -33,15 +33,16 @@
 
     <ListView
         android:id="@+id/receiptItemList"
-        android:layout_width="368dp"
-        android:layout_height="373dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:layout_marginBottom="80dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <TextView
         android:id="@+id/receiptName"
@@ -51,7 +52,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="TextView111111"
         app:layout_constraintBottom_toTopOf="@+id/receiptItemList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -20,11 +20,15 @@ import java.util.List;
 
 public class splitBill extends AppCompatActivity {
 
+    public ArrayList<friends> friendsList;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_friends_activity);
 
+        friendsList  = new ArrayList<friends>();
         ArrayList<receipt> list = new ArrayList<receipt>();
         String[] names = {"Baiwen Huang", "Kevin Lee", "Shyaan Khan", "Chris Evans",
                 "Person 1", "Person 2", "Person 3", "Person 4",
@@ -53,6 +57,12 @@ public class splitBill extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), splitReceipt.class);
+                for(int x = 0; x < friendsList.size(); x++)
+                {
+                    System.out.println(friendsList.get(x));
+                }
+
+                i.putExtra("friendsList", friendsList);
                 //list.get(position).saveReceipt(context,"receipt");
                 startActivity(i);
             }
@@ -62,7 +72,8 @@ public class splitBill extends AppCompatActivity {
     public void selectedFriend(View view) {
 
         RadioButton checkFriends = (RadioButton) view.findViewById(R.id.checkFriend);
-
+        friends temp = new friends(checkFriends.getText().toString());
+        friendsList.add(temp);
         Toast toast = Toast.makeText(this, checkFriends.getText() , Toast.LENGTH_SHORT);
         toast.show();
     }

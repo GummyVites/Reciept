@@ -1,6 +1,8 @@
 package com.example.kevinlee.buttonboy;
 
-public class friends {
+import java.io.Serializable;
+
+public class friends implements Serializable{
     public String name;
     public Float money;
 

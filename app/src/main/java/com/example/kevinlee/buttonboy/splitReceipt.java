@@ -19,6 +19,7 @@ public class splitReceipt extends AppCompatActivity {
         setContentView(R.layout.activity_split_receipt);
         receipt tempReceipt = new receipt();
         tempReceipt = tempReceipt.load(splitReceipt.this,"lists");
+        ArrayList<friends> friendsList = (ArrayList<friends>) getIntent().getSerializableExtra("friendsList");
 
         ArrayList<item> items= new ArrayList<item>();
         for (int i =0; i<tempReceipt.itemPrices.size(); ++i) {
@@ -28,7 +29,7 @@ public class splitReceipt extends AppCompatActivity {
             items.add(temp);
         }
 
-        recieptItemAdapter itemAdapter = new recieptItemAdapter(items, this);
+        recieptItemAdapter itemAdapter = new recieptItemAdapter(items, friendsList, this);
         ListView listView = (ListView) findViewById(R.id.receiptItemList);
         listView.setAdapter(itemAdapter);
 

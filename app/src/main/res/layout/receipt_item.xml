@@ -19,7 +19,9 @@
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/item_name" />
+        android:layout_weight="1"
+        android:layout_below="@+id/item_name"
+        android:nestedScrollingEnabled="true"/>
 
     <TextView
         android:id="@+id/item_cost"
