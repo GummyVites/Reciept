@@ -4,11 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -21,7 +25,7 @@ import java.util.List;
 public class splitBill extends AppCompatActivity {
 
     public ArrayList<friends> friendsList;
-
+    public ArrayList<receipt> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +33,7 @@ public class splitBill extends AppCompatActivity {
         setContentView(R.layout.select_friends_activity);
 
         friendsList  = new ArrayList<friends>();
-        ArrayList<receipt> list = new ArrayList<receipt>();
+        list = new ArrayList<receipt>();
         String[] names = {"Baiwen Huang", "Kevin Lee", "Shyaan Khan", "Chris Evans",
                 "Person 1", "Person 2", "Person 3", "Person 4",
                 "Person 5", "Person 6", "Person 7"};
@@ -65,6 +69,38 @@ public class splitBill extends AppCompatActivity {
                 i.putExtra("friendsList", friendsList);
                 //list.get(position).saveReceipt(context,"receipt");
                 startActivity(i);
+            }
+        });
+
+        EditText newFriend =  (EditText) findViewById(R.id.friendName);
+        newFriend.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent){
+                boolean handled = false;
+                if (i== EditorInfo.IME_ACTION_DONE) {
+                    String inputText = textView.getText().toString();
+
+                    receipt temp = new receipt();
+                    temp.name = inputText;
+                    temp.itemPrices = new ArrayList<Float>();
+                    temp.itemNames = new ArrayList<String>();
+                    for (int j = 0; j < i; ++j) {
+                        temp.itemNames.add("wall");
+                        temp.itemPrices.add((float) j);
+                    }
+
+                    list.add(temp);
+
+                    receiptListAdapter adapter = new receiptListAdapter(list, splitBill.this);
+
+                    //handle listview and assign adapter
+                    ListView lView = (ListView) findViewById(R.id.listview);
+                    lView.setAdapter(adapter);
+                    InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    handled = true;
+                }
+                return handled;
             }
         });
     }
