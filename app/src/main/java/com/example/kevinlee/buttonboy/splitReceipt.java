@@ -7,7 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -19,9 +25,9 @@ public class splitReceipt extends AppCompatActivity {
         setContentView(R.layout.activity_split_receipt);
         receipt tempReceipt = new receipt();
         tempReceipt = tempReceipt.load(splitReceipt.this,"lists");
-        ArrayList<friends> friendsList = (ArrayList<friends>) getIntent().getSerializableExtra("friendsList");
+        final ArrayList<friends> friendsList = (ArrayList<friends>) getIntent().getSerializableExtra("friendsList");
 
-        ArrayList<item> items= new ArrayList<item>();
+        final ArrayList<item> items= new ArrayList<item>();
         for (int i =0; i<tempReceipt.itemPrices.size(); ++i) {
             item temp = new item();
             temp.name=tempReceipt.itemNames.get(i);
@@ -29,8 +35,8 @@ public class splitReceipt extends AppCompatActivity {
             items.add(temp);
         }
 
-        recieptItemAdapter itemAdapter = new recieptItemAdapter(items, friendsList, this);
-        ListView listView = (ListView) findViewById(R.id.receiptItemList);
+        final recieptItemAdapter itemAdapter = new recieptItemAdapter(items, friendsList, this);
+        final ListView listView = (ListView) findViewById(R.id.receiptItemList);
         listView.setAdapter(itemAdapter);
 
         Button acceptBtn = (Button) findViewById(R.id.acceptBtn);
@@ -40,7 +46,15 @@ public class splitReceipt extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO send money req
-                finish();
+                for (int i=0; i < friendsList.size(); ++i) {
+                    friends temp = friendsList.get(i);
+                    for (int j=0; j < temp.selectedItems.size(); ++j) {
+                        temp.money += temp.selectedItems.get(j).cost / (temp.selectedItems.get(j).count + 1);
+                    }
+                }
+                Toast toast = Toast.makeText(v.getContext(), friendsList.get(0).money.toString() , Toast.LENGTH_SHORT);
+                toast.show();
+                //finish();
             }
         });
 

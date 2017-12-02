@@ -20,8 +20,6 @@ public class recieptItemAdapter extends BaseAdapter implements ListAdapter {
     private Context context;
     private ArrayList<friends> friendsList = new ArrayList<friends>();
 
-
-
     public recieptItemAdapter(ArrayList<item> list, ArrayList<friends> friendsList, Context context) {
         this.list = list;
         this.context = context;
@@ -63,7 +61,7 @@ public class recieptItemAdapter extends BaseAdapter implements ListAdapter {
         myFriends.add(Chris);*/
 
 
-        friendsSelectorAdapter friendsSelectorAdapter = new friendsSelectorAdapter(friendsList, context);
+        friendsSelectorAdapter friendsSelectorAdapter = new friendsSelectorAdapter(list.get(position),friendsList, context);
 
         ListView friendsList = (ListView)view.findViewById(R.id.friend_selector);
         friendsList.setAdapter(friendsSelectorAdapter);

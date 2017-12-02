@@ -109,6 +109,13 @@ public class splitBill extends AppCompatActivity {
 
         RadioButton checkFriends = (RadioButton) view.findViewById(R.id.checkFriend);
         friends temp = new friends(checkFriends.getText().toString());
+        temp.money = new Float(0);
+        temp.selectedItems = new ArrayList<item>();
+        for (int i = 0; i < friendsList.size(); ++i){
+            if (friendsList.get(i).name == temp.name) {
+                return;
+            }
+        }
         friendsList.add(temp);
         Toast toast = Toast.makeText(this, checkFriends.getText() , Toast.LENGTH_SHORT);
         toast.show();

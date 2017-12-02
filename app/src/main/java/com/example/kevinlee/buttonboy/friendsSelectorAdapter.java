@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -16,10 +18,12 @@ import java.util.ArrayList;
 public class friendsSelectorAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<friends> list = new ArrayList<friends>();
     private Context context;
+    private item item;
 
-    public friendsSelectorAdapter(ArrayList<friends> list, Context context) {
+    public friendsSelectorAdapter(item item, ArrayList<friends> list, Context context) {
         this.list = list;
         this.context = context;
+        this.item = item;
     }
 
     @Override
@@ -49,6 +53,20 @@ public class friendsSelectorAdapter extends BaseAdapter implements ListAdapter {
         //Handle TextView and display string from your list
         TextView name = (TextView)view.findViewById(R.id.name);
         name.setText(list.get(position).name);
+
+        CheckBox select = (CheckBox)view.findViewById(R.id.checkBox);
+        select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    list.get(position).selectedItems.add(item);
+                    item.count += 1;
+                } else {
+                    list.get(position).selectedItems.remove(item);
+                    item.count -= 1;
+                }
+            }
+        });
 
 
 
