@@ -5,28 +5,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1D4960"
     tools:context="com.example.kevinlee.buttonboy.splitBill">
 
 
     <ListView
         android:id="@+id/listview"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="205dp"
-        android:layout_marginTop="8dp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="420dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/selectFriendsTitle" />
 
     <Button
         android:id="@+id/nextBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="76dp"
+        android:layout_marginBottom="24dp"
         android:layout_marginEnd="6dp"
         android:layout_marginStart="27dp"
+        android:backgroundTint="#FFFFFF"
         android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,17 +34,15 @@
 
     <TextView
         android:id="@+id/selectFriendsTitle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="Select Your Friends"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/listview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -57,6 +52,9 @@
         android:ems="10"
         android:hint="Add Friend"
         android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#CCCCCC"
+        android:backgroundTint="#96CBFF"
         app:layout_constraintBottom_toBottomOf="@+id/nextBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.703"

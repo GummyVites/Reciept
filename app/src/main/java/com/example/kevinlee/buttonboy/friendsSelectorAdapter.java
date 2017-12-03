@@ -68,8 +68,6 @@ public class friendsSelectorAdapter extends BaseAdapter implements ListAdapter {
             }
         });
 
-
-
         return view;
     }
 }

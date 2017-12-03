@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,9 @@ public class receiptListAdapter extends BaseAdapter implements ListAdapter {
         }
 
         RadioButton checkFriends = (RadioButton) view.findViewById(R.id.checkFriend);
+        checkFriends.setTextColor(Color.WHITE);
         checkFriends.setText(list.get(position).name);
+
 
         /*TextView listItemText = (TextView)view.findViewById(R.id.list_item_string);
         listItemText.setText(list.get(position).name);

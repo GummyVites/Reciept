@@ -12,7 +12,8 @@
         android:layout_centerVertical="true"
         android:paddingLeft="8dp"
         android:textSize="35sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"/>
 
     <RadioButton
         android:id="@+id/checkFriend"
@@ -20,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:buttonTint="#e75748"
+        android:buttonTint="#96CBFF"
         android:onClick="selectedFriend"
         />
 
