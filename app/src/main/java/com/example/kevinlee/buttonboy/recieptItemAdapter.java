@@ -75,12 +75,12 @@ public class recieptItemAdapter extends BaseAdapter implements ListAdapter {
         friendsList.setAdapter(friendsSelectorAdapter);
 
         //Handle TextView and display string from your list
-        TextView itemCost = (TextView)view.findViewById(R.id.item_cost);
-        itemCost.setTextColor(Color.WHITE);
+        final TextView itemCost = (TextView)view.findViewById(R.id.item_cost);
+        itemCost.setTextColor(Color.GRAY);
         itemCost.setText("$" + list.get(position).cost.toString());
 
         final TextView itemName = (TextView) view.findViewById(R.id.item_name);
-        itemName.setTextColor(Color.WHITE);
+        itemName.setTextColor(Color.GRAY);
         itemName.setText(list.get(position).name);
 
         itemName.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +93,7 @@ public class recieptItemAdapter extends BaseAdapter implements ListAdapter {
                 newItemName.setText(itemName.getText().toString());
 
 
-                mBuilder.setView(vw).setTitle("Enter New Item Name").setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                mBuilder.setView(vw).setTitle("Enter New Price").setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         View vw2 = inflater.inflate(R.layout.activity_split_receipt, null);
@@ -102,6 +102,7 @@ public class recieptItemAdapter extends BaseAdapter implements ListAdapter {
                         for(int i = 0; i < list.size();i++) {
                                 if(itemName.getText().toString().equals(list.get(i).name))
                                 {
+                                    Log.i("ITS IN", "ITS INSIDE ITEM");
                                     String newItem = newItemName.getText().toString();
                                     itemName.setText(newItem);
                                     item it = new item();
@@ -119,6 +120,46 @@ public class recieptItemAdapter extends BaseAdapter implements ListAdapter {
             }
         });
 
+        itemCost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
+                final LayoutInflater inflater = LayoutInflater.from(context);
+                final View vw = inflater.inflate(R.layout.change_price, null);
+                final EditText newCostNumber = (EditText) vw.findViewById(R.id.newItemCost);
+                newCostNumber.setText(itemCost.getText().toString());
+
+                String tempItemName = itemName.getText().toString();
+                mBuilder.setView(vw).setTitle("Enter New Item Name").setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        View vw2 = inflater.inflate(R.layout.activity_split_receipt, null);
+                        for(int i = 0; i < list.size();i++) {
+
+                            Log.i("ItemCost",itemCost.getText().toString().substring(1,4) );
+                            Log.i("LIST.COST", list.get(i).cost.toString().substring(0,3));
+
+                            if(itemCost.getText().toString().substring(1,4).equals(list.get(i).cost.toString().substring(0,3))){
+                                Log.i("ITS IN", "ITS INSIDE IF LOOP");
+                                String newCost = newCostNumber.getText().toString();
+                                itemCost.setText(newCost);
+                                //after string is set take out $
+                                newCost = newCost.substring(1,newCost.length());
+                                float newCostFloat = Float.valueOf(newCost);
+                                item it = new item();
+                                it.cost = newCostFloat;
+                                list.set(i,it);
+                            }
+
+                        }
+
+
+                    }
+                });
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
+            }
+        });
 
         return view;
     }
