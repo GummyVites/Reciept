@@ -136,10 +136,10 @@ public class recieptItemAdapter extends BaseAdapter implements ListAdapter {
                         View vw2 = inflater.inflate(R.layout.activity_split_receipt, null);
                         for(int i = 0; i < list.size();i++) {
 
-                            Log.i("ItemCost",itemCost.getText().toString().substring(1,4) );
+                            Log.i("ItemCost",itemCost.getText().toString().substring(1,itemCost.getText().toString().length()) );
                             Log.i("LIST.COST", list.get(i).cost.toString().substring(0,3));
 
-                            if(itemCost.getText().toString().substring(1,4).equals(list.get(i).cost.toString().substring(0,3))){
+                            if(itemCost.getText().toString().substring(1,itemCost.getText().toString().length()).equals(list.get(i).cost.toString().substring(0,list.get(i).cost.toString().length()))){
                                 Log.i("ITS IN", "ITS INSIDE IF LOOP");
                                 String newCost = newCostNumber.getText().toString();
                                 itemCost.setText(newCost);
