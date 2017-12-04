@@ -102,12 +102,15 @@ public class recieptItemAdapter extends BaseAdapter implements ListAdapter {
                         for(int i = 0; i < list.size();i++) {
                                 if(itemName.getText().toString().equals(list.get(i).name))
                                 {
-                                    Log.i("ITS IN", "ITS INSIDE ITEM");
+                                    //Log.i("ITS IN", "ITS INSIDE ITEM");
                                     String newItem = newItemName.getText().toString();
                                     itemName.setText(newItem);
                                     item it = new item();
                                     it.name = newItem;
-                                    list.set(i, it);
+                                    Log.i("HELLO IM NOT NULL ITEM", it.name);
+                                    Log.i("HELLO IM NOT NULL ITEM", Integer.toString(i));
+                                    list.get(i).name = newItem;
+                                    Log.i("HELLO IM NOT NULL ITEM", list.get(i).name);
                                 }
                         }
 
@@ -148,7 +151,10 @@ public class recieptItemAdapter extends BaseAdapter implements ListAdapter {
                                 float newCostFloat = Float.valueOf(newCost);
                                 item it = new item();
                                 it.cost = newCostFloat;
-                                list.set(i,it);
+                                Log.i("HELLO IM NOT NULL PRICE", it.cost.toString());
+                                Log.i("HELLO IM NOT NULL PRICE", Integer.toString(i));
+                                list.get(i).cost = newCostFloat;
+                                Log.i("HELLO IM NOT NULL PRICE", list.get(i).cost.toString());
                             }
 
                         }
