@@ -1,6 +1,7 @@
 package com.example.kevinlee.buttonboy;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,9 +54,11 @@ public class friendTotalAdapter extends BaseAdapter implements ListAdapter  {
 
         //Handle TextView and display string from your list
         TextView name = (TextView)view.findViewById(R.id.name);
+        name.setTextColor(Color.BLACK);
         name.setText(list.get(position).name);
 
         TextView money = (TextView)view.findViewById(R.id.total);
+        money.setTextColor(Color.BLACK);
         money.setText(list.get(position).money.toString());
 
         return view;

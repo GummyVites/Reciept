@@ -50,7 +50,8 @@ public class splitReceipt extends AppCompatActivity   {
                 for (int i=0; i < friendsList.size(); ++i) {
                     friends temp = friendsList.get(i);
                     for (int j=0; j < temp.selectedItems.size(); ++j) {
-                        temp.money += temp.selectedItems.get(j).cost / (temp.selectedItems.get(j).count + 1);
+                        temp.money += temp.selectedItems.get(j).cost / (temp.selectedItems.get(j).count);
+                        temp.selectedItems.get(j).count=temp.selectedItems.get(j).count + 1;
                     }
                 }
 //                Toast toast = Toast.makeText(v.getContext(), friendsList.get(0).money.toString() , Toast.LENGTH_SHORT);

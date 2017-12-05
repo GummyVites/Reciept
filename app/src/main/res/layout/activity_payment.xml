@@ -9,7 +9,16 @@
     <ListView
         android:id="@+id/totalList"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="363dp"
         app:layout_constraintStart_toStartOf="parent"
-    />
+        tools:layout_editor_absoluteY="84dp" />
+
+    <Button
+        android:id="@+id/request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Request Payment"
+        app:layout_constraintTop_toBottomOf="@+id/totalList"
+        tools:layout_editor_absoluteX="115dp" />
 </android.support.constraint.ConstraintLayout>
