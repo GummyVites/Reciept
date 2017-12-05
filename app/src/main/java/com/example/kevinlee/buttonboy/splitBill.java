@@ -70,6 +70,7 @@ public class splitBill extends AppCompatActivity {
                 i.putExtra("friendsList", friendsList);
                 //list.get(position).saveReceipt(context,"receipt");
                 startActivity(i);
+                finish();
             }
         });
 

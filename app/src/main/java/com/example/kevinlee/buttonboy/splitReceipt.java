@@ -1,6 +1,7 @@
 package com.example.kevinlee.buttonboy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class splitReceipt extends AppCompatActivity {
+public class splitReceipt extends AppCompatActivity   {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +53,12 @@ public class splitReceipt extends AppCompatActivity {
                         temp.money += temp.selectedItems.get(j).cost / (temp.selectedItems.get(j).count + 1);
                     }
                 }
-                Toast toast = Toast.makeText(v.getContext(), friendsList.get(0).money.toString() , Toast.LENGTH_SHORT);
-                toast.show();
-                //finish();
+//                Toast toast = Toast.makeText(v.getContext(), friendsList.get(0).money.toString() , Toast.LENGTH_SHORT);
+//                toast.show();
+                Intent i = new Intent(splitReceipt.this,payment.class);
+                i.putExtra("friendsLists", friendsList);
+                startActivity(i);
+                finish();
             }
         });
 
