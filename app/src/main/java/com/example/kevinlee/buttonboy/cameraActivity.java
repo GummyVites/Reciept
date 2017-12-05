@@ -70,18 +70,21 @@ public class cameraActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             if (data != null) {
 
-                Bitmap picture = (Bitmap) data.getExtras().get("data");
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                Bitmap picture = (Bitmap) data.getExtras().get("data");
+//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//
+//                picture.compress(Bitmap.CompressFormat.PNG, 100, baos);
+//                byte[] b = baos.toByteArray();
+//                String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+//                //Log.i("ITS IN", imageEncoded);
+//                SharedPreferences.Editor editor = getSharedPreferences("LOL", MODE_PRIVATE).edit();
+//                editor.putString("SENDPHOTO", imageEncoded);
+//                editor.apply();
 
-                picture.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                byte[] b = baos.toByteArray();
-                String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-                //Log.i("ITS IN", imageEncoded);
-                SharedPreferences.Editor editor = getSharedPreferences("LOL", MODE_PRIVATE).edit();
-                editor.putString("SENDPHOTO", imageEncoded);
-                editor.apply();
+                Intent intent = new Intent(cameraActivity.this,OCRActivity.class);
+                intent.putExtra("bitmap", (Bitmap) data.getExtras().get("data"));
 
-                startActivity(new Intent(cameraActivity.this, OCRActivity.class));
+                startActivity(intent);
             }
         }
     }

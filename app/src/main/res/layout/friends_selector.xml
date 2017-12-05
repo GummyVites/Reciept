@@ -9,7 +9,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="19dp" />
+        android:layout_marginEnd="19dp"
+        android:buttonTint="#96CBFF"
+        />
 
     <TextView
         android:id="@+id/name"
@@ -19,5 +21,6 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="26dp"
         android:text="TextView"
+        android:textColor="#FFFFFF"
         android:textSize="18sp" />
 </RelativeLayout>

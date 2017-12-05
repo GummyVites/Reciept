@@ -40,6 +40,7 @@ public class cropper extends AppCompatActivity {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
+                //Bitmap bitmap = result.getBitmap();
                 Uri Uri_picture = result.getUri();
                 try {
                     InputStream image_stream = getContentResolver().openInputStream(Uri_picture);
@@ -57,6 +58,9 @@ public class cropper extends AppCompatActivity {
                 }catch (FileNotFoundException e){
                     e.printStackTrace();
                 }
+//                Intent intent = new Intent(this,OCRActivity.class);
+//                intent.putExtra("bitmap", bitmap);
+//                startActivity(new Intent(cropper.this, OCRActivity.class));
                 ((ImageView) findViewById(R.id.quick_start_cropped_image)).setImageURI(Uri_picture);
                 Toast.makeText(
                         this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG)

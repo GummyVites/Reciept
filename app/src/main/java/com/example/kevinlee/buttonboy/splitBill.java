@@ -2,6 +2,7 @@ package com.example.kevinlee.buttonboy;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -117,7 +118,7 @@ public class splitBill extends AppCompatActivity {
             }
         }
         friendsList.add(temp);
-        Toast toast = Toast.makeText(this, checkFriends.getText() , Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, checkFriends.getText() +" selected" , Toast.LENGTH_SHORT);
         toast.show();
     }
 }
