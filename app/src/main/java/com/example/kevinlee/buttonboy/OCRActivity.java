@@ -108,6 +108,8 @@ public class OCRActivity extends AppCompatActivity {
         }*/
         //String temp = TessOCR.getOCRResult(bitmap);
 
+        Bitmap bitmap = getIntent().getParcelableExtra("bitmap");
+
         Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.receipt1);
         String temp = TessOCR.getOCRResult(image);
         textParser parser = new textParser(temp);
@@ -134,16 +136,19 @@ public class OCRActivity extends AppCompatActivity {
     }
 
     public void setPicture(){
-        SharedPreferences editor = getSharedPreferences("LOL", MODE_PRIVATE);
-        String photo = editor.getString("SENDPHOTO", "none");
-        if(!photo.equals("photo"))
-        {
-            byte[] b = Base64.decode(photo, Base64.DEFAULT);
-            InputStream is = new ByteArrayInputStream(b);
-            bitmap = BitmapFactory.decodeStream(is);
-            ImageView img = (ImageView) findViewById(R.id.imageView);
-            img.setImageBitmap(bitmap);
-        }
+//        SharedPreferences editor = getSharedPreferences("LOL", MODE_PRIVATE);
+//        String photo = editor.getString("SENDPHOTO", "none");
+//        if(!photo.equals("photo"))
+//        {
+//            byte[] b = Base64.decode(photo, Base64.DEFAULT);
+//            InputStream is = new ByteArrayInputStream(b);
+//            bitmap = BitmapFactory.decodeStream(is);
+//            ImageView img = (ImageView) findViewById(R.id.imageView);
+//            img.setImageBitmap(bitmap);
+//        }
+        ImageView img = (ImageView) findViewById(R.id.imageView);
+        Bitmap bitmaps = getIntent().getParcelableExtra("bitmap");
+        img.setImageBitmap(bitmaps);
     }
 
 }
