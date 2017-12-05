@@ -93,7 +93,7 @@ public class recieptItemAdapter extends BaseAdapter implements ListAdapter {
                 newItemName.setText(itemName.getText().toString());
 
 
-                mBuilder.setView(vw).setTitle("Enter New Price").setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                mBuilder.setView(vw).setTitle("Enter New Item").setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         View vw2 = inflater.inflate(R.layout.activity_split_receipt, null);
@@ -133,7 +133,7 @@ public class recieptItemAdapter extends BaseAdapter implements ListAdapter {
                 newCostNumber.setText(itemCost.getText().toString());
 
                 String tempItemName = itemName.getText().toString();
-                mBuilder.setView(vw).setTitle("Enter New Item Name").setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                mBuilder.setView(vw).setTitle("Enter New Item Price").setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         View vw2 = inflater.inflate(R.layout.activity_split_receipt, null);

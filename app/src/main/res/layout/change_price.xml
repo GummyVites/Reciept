@@ -11,7 +11,7 @@
     app:layout_constraintRight_toLeftOf="parent"
     app:layout_constraintLeft_toRightOf="parent"
     android:hint="Item Cost"
-        android:inputType="number"
+        android:digits="0123456789.$"
     />
 
 
