@@ -56,6 +56,7 @@
                 android:value="ocr" />
         </provider>
 
+        <activity android:name=".tabbedFriends"></activity>
     </application>
 
 </manifest>
