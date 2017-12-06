@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             //linechart
                             case 3:
+                                startActivity(new Intent(MainActivity.this, tabbedFriends.class));
                                 break;
                             //piechart
                             case 4:

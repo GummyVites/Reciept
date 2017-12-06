@@ -35,7 +35,8 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".cropper" />
         <activity android:name=".payment" />
-        <activity android:name=".venmoPay"></activity>
+        <activity android:name=".venmoPay" />
+        <activity android:name=".tabbedFriends"></activity>
     </application>
 
 </manifest>
