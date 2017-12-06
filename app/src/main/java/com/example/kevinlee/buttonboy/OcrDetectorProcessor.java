@@ -28,6 +28,8 @@ import com.google.android.gms.vision.text.TextBlock;
 public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
 
     private GraphicOverlay<OcrGraphic> mGraphicOverlay;
+    private SparseArray<TextBlock> items;
+
 
     OcrDetectorProcessor(GraphicOverlay<OcrGraphic> ocrGraphicOverlay) {
         mGraphicOverlay = ocrGraphicOverlay;
@@ -43,7 +45,7 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
     @Override
     public void receiveDetections(Detector.Detections<TextBlock> detections) {
         mGraphicOverlay.clear();
-        SparseArray<TextBlock> items = detections.getDetectedItems();
+        items = detections.getDetectedItems();
         for (int i = 0; i < items.size(); ++i) {
             TextBlock item = items.valueAt(i);
             if (item != null && item.getValue() != null) {
@@ -53,6 +55,8 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
             mGraphicOverlay.add(graphic);
         }
     }
+
+//    public SparseArray<TextBlock> getItems()[]
 
     /**
      * Frees the resources associated with this detection processor.

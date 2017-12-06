@@ -22,6 +22,7 @@ import android.view.View;
 
 import com.google.android.gms.vision.CameraSource;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -174,6 +175,24 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
             }
             return null;
         }
+    }
+    public ArrayList<T> getAllGraphicinRow(float rawX, float rawY) {
+        synchronized (mLock) {
+            ArrayList<T> row = new ArrayList<>();
+            // Get the position of this View so the raw location can be offset relative to the view.
+            int[] location = new int[2];
+            this.getLocationOnScreen(location);
+            for (T graphic : mGraphics) {
+                if (graphic.contains(rawX - location[0], rawY - location[1])) {
+                    row.add(graphic);
+                }
+            }
+            return null;
+        }
+    }
+
+    public Set<T> getAllGraphics(){
+        return mGraphics;
     }
 
     /**

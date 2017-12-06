@@ -47,7 +47,9 @@ import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Activity for the Ocr Detecting app.  This app detects text and displays the value with the
@@ -106,24 +108,24 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         gestureDetector = new GestureDetector(this, new CaptureGestureListener());
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
 
-        Snackbar.make(mGraphicOverlay, "Tap to Speak. Pinch/Stretch to zoom",
+        Snackbar.make(mGraphicOverlay, "Tap to Capture. Pinch/Stretch to zoom",
                 Snackbar.LENGTH_LONG)
                 .show();
 
         // Set up the Text To Speech engine.
-        TextToSpeech.OnInitListener listener =
-                new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(final int status) {
-                        if (status == TextToSpeech.SUCCESS) {
-                            Log.d("OnInitListener", "Text to speech engine started successfully.");
-                            tts.setLanguage(Locale.US);
-                        } else {
-                            Log.d("OnInitListener", "Error starting the text to speech engine.");
-                        }
-                    }
-                };
-        tts = new TextToSpeech(this.getApplicationContext(), listener);
+//        TextToSpeech.OnInitListener listener =
+//                new TextToSpeech.OnInitListener() {
+//                    @Override
+//                    public void onInit(final int status) {
+//                        if (status == TextToSpeech.SUCCESS) {
+//                            Log.d("OnInitListener", "Text to speech engine started successfully.");
+//                            tts.setLanguage(Locale.US);
+//                        } else {
+//                            Log.d("OnInitListener", "Error starting the text to speech engine.");
+//                        }
+//                    }
+//                };
+//        tts = new TextToSpeech(this.getApplicationContext(), listener);
     }
 
     /**
@@ -337,15 +339,15 @@ public final class OcrCaptureActivity extends AppCompatActivity {
      * @param rawY - the raw position of the tap.
      * @return true if the tap was on a TextBlock
      */
-    private boolean onTap(float rawX, float rawY) {
+    private boolean legacyonTap(float rawX, float rawY) {
         OcrGraphic graphic = mGraphicOverlay.getGraphicAtLocation(rawX, rawY);
         TextBlock text = null;
         if (graphic != null) {
             text = graphic.getTextBlock();
             if (text != null && text.getValue() != null) {
-                Log.d(TAG, "text data is being spoken! " + text.getValue());
+                Log.d(TAG, "text data is being processed! " + text.getValue());
                 // Speak the string.
-                tts.speak(text.getValue(), TextToSpeech.QUEUE_ADD, null, "DEFAULT");
+//                tts.speak(text.getValue(), TextToSpeech.QUEUE_ADD, null, "DEFAULT");
             }
             else {
                 Log.d(TAG, "text data is null");
@@ -357,11 +359,30 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         return text != null;
     }
 
+//    private boolean onTapRow(float rawX, float rawY){
+//
+//    }
+    private boolean onTap() {
+        Set<OcrGraphic> graphics = mGraphicOverlay.getAllGraphics();
+        TextBlock text = null;
+        Iterator<OcrGraphic> graphic = graphics.iterator();
+        while (graphic.hasNext()){
+            text=graphic.next().getTextBlock();
+            Log.i("text results",text.getValue());
+            if (text == null){
+                return text !=null;
+            }
+        }
+        return true;
+    }
+
     private class CaptureGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
-            return onTap(e.getRawX(), e.getRawY()) || super.onSingleTapConfirmed(e);
+//            return onTap(e.getRawX(), e.getRawY()) || super.onSingleTapConfirmed(e);
+            return onTap() || super.onSingleTapConfirmed(e);
+
         }
     }
 
