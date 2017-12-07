@@ -39,6 +39,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -368,7 +369,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
 
     private ArrayList<String> itemList = new ArrayList<>();
     private ArrayList<Float> priceList = new ArrayList<>();
-
+    boolean touchOn=true;
     public static boolean almostEqual(double a, double b, double eps){
         return Math.abs(a-b)<(eps);
     }
@@ -427,17 +428,86 @@ public final class OcrCaptureActivity extends AppCompatActivity {
                             itemList.add(currentText.getValue());
                             priceList.add(Float.valueOf(otherMatcher.group(1)));
                         }
-                        receipt receipt = new receipt();
-                        receipt.setItemNames(itemList);
-                        receipt.setItemPrices(priceList);
-                        receipt.saveReceipt(OcrCaptureActivity.this,"lists");
+                        touchOn=false;
+                        showDialogue();
+
                     }
                 }
 
             }
-            return true;
+            return touchOn;
         }
         return false;
+    }
+
+    public void showDialogue(){
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setMessage(itemList.toString()+"Are you sure you want to exit?")
+//                .setCancelable(false)
+//                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        receipt receipt = new receipt();
+//                        receipt.setItemNames(itemList);
+//                        receipt.setItemPrices(priceList);
+//                        receipt.saveReceipt(OcrCaptureActivity.this,"lists");
+//                        OcrCaptureActivity.this.finish();
+//                    }
+//                })
+//                .setNegativeButton("Retry", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        itemList = new ArrayList<>();
+//                        priceList = new ArrayList<>();
+//                        dialog.dismiss();
+//                        dialog.cancel();
+//                    }
+//                });
+//        AlertDialog alert = builder.create();
+//        alert.show();
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(OcrCaptureActivity.this);
+        builderSingle.setIcon(R.drawable.camera);
+        builderSingle.setTitle("Select One Name:-");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(OcrCaptureActivity.this, android.R.layout.select_dialog_singlechoice);
+        for(String item: itemList){
+            arrayAdapter.add(item);
+        }
+
+        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                touchOn=true;
+            }
+        });
+
+        builderSingle.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        receipt receipt = new receipt();
+                        receipt.setItemNames(itemList);
+                        receipt.setItemPrices(priceList);
+                        receipt.saveReceipt(OcrCaptureActivity.this,"lists");
+                        OcrCaptureActivity.this.finish();
+                    }
+                });
+
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String strName = arrayAdapter.getItem(which);
+                AlertDialog.Builder builderInner = new AlertDialog.Builder(OcrCaptureActivity.this);
+                builderInner.setMessage(strName);
+                builderInner.setTitle("Your Selected Item is");
+                builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builderInner.show();
+            }
+        });
+        builderSingle.show();
     }
 
 //    private boolean onTap(){
