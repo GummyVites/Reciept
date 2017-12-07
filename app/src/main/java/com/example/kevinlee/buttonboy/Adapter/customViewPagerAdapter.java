@@ -1,6 +1,7 @@
 package com.example.kevinlee.buttonboy.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import com.example.kevinlee.buttonboy.Model.Model;
 import com.example.kevinlee.buttonboy.R;
 import com.example.kevinlee.buttonboy.TabViewItem;
 import com.example.kevinlee.buttonboy.friends;
+import com.example.kevinlee.buttonboy.payment;
+import com.example.kevinlee.buttonboy.venmoPay;
 import com.hold1.pagertabsindicator.TabViewProvider;
 
 import java.util.ArrayList;
@@ -54,20 +57,24 @@ public class customViewPagerAdapter extends PagerAdapter implements TabViewProvi
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position){
+    public Object instantiateItem(ViewGroup container,final int position){
         LayoutInflater inflater = LayoutInflater.from(context);
         View itemView = inflater.inflate(R.layout.layout_item,container,false);
 
         TextView textView = (TextView) itemView.findViewById(R.id.txtTextView);
-        textView.setText(list.get(position).name+"'s total is"+" "+list.get(position).money.toString());
+        textView.setText(list.get(position).name+"'s total is"+" $"+list.get(position).money.toString());
 
-//        Button venmoUrl = (Button) itemView.findViewById(R.id.payment);
-//        venmoUrl.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        Button venmoUrl = (Button) itemView.findViewById(R.id.payment);
+        venmoUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, venmoPay.class);
+                intent.putExtra("totalMoney",list.get(position).money);
+                intent.putExtra("PayerName",list.get(position).name);
+                context.startActivity(intent);
+
+            }
+        });
 
         container.addView(itemView);
         return itemView;

@@ -15,13 +15,13 @@
         android:textStyle="bold"
         android:textColor="#FFFFFF"/>
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/checkFriend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:buttonTint="#96CBFF"
+        android:theme="@style/MyCheckBox"
         android:onClick="selectedFriend"
         />
 
