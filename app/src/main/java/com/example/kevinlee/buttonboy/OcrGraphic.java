@@ -38,23 +38,26 @@ public class OcrGraphic extends GraphicOverlay.Graphic {
     private static Paint sRectPaint;
     private static Paint sTextPaint;
     private final TextBlock mText;
+    List<? extends Text> textComponents;
+
 
     OcrGraphic(GraphicOverlay overlay, TextBlock text) {
         super(overlay);
 
         mText = text;
+        textComponents = mText.getComponents();
 
         if (sRectPaint == null) {
             sRectPaint = new Paint();
-            sRectPaint.setColor(TEXT_COLOR);
+            sRectPaint.setColor(Color.RED);
             sRectPaint.setStyle(Paint.Style.STROKE);
-            sRectPaint.setStrokeWidth(4.0f);
+            sRectPaint.setStrokeWidth(3.0f);
         }
 
         if (sTextPaint == null) {
             sTextPaint = new Paint();
             sTextPaint.setColor(TEXT_COLOR);
-            sTextPaint.setTextSize(54.0f);
+            sTextPaint.setTextSize(40.0f);
         }
         // Redraw the overlay, as this graphic has been added.
         postInvalidate();
@@ -70,6 +73,9 @@ public class OcrGraphic extends GraphicOverlay.Graphic {
 
     public TextBlock getTextBlock() {
         return mText;
+    }
+    public List<? extends Text> getBlockComponents(){
+        return textComponents;
     }
 
     /**
@@ -99,7 +105,20 @@ public class OcrGraphic extends GraphicOverlay.Graphic {
         if (mText == null) {
             return;
         }
-
+////        Draws boxes line by line instead of box by box
+//        List<? extends Text> textComponents = mText.getComponents();
+//        for (Text currentText : textComponents) {
+//            RectF rect = new RectF(currentText.getBoundingBox());
+//            rect.left = translateX(rect.left);
+//            rect.top = translateY(rect.top);
+//            rect.right = translateX(rect.right);
+//            rect.bottom = translateY(rect.bottom);
+//            canvas.drawRect(rect, sRectPaint);
+//            float left = translateX(currentText.getBoundingBox().left);
+//            float bottom = translateY(currentText.getBoundingBox().bottom);
+//            canvas.drawText(currentText.getValue(), left, bottom, sTextPaint);
+//
+//        }
         // Draws the bounding box around the TextBlock.
         RectF rect = new RectF(mText.getBoundingBox());
         rect.left = translateX(rect.left);
@@ -108,7 +127,7 @@ public class OcrGraphic extends GraphicOverlay.Graphic {
         rect.bottom = translateY(rect.bottom);
         canvas.drawRect(rect, sRectPaint);
 
-        // Break the text into multiple lines and draw each one according to its own bounding box.
+//         Break the text into multiple lines and draw each one according to its own bounding box.
         List<? extends Text> textComponents = mText.getComponents();
         for(Text currentText : textComponents) {
             float left = translateX(currentText.getBoundingBox().left);

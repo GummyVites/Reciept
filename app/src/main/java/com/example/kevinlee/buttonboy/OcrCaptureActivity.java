@@ -25,6 +25,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,16 +39,25 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Activity for the Ocr Detecting app.  This app detects text and displays the value with the
@@ -106,24 +116,24 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         gestureDetector = new GestureDetector(this, new CaptureGestureListener());
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
 
-        Snackbar.make(mGraphicOverlay, "Tap to Speak. Pinch/Stretch to zoom",
+        Snackbar.make(mGraphicOverlay, "Tap to Capture. Pinch/Stretch to zoom",
                 Snackbar.LENGTH_LONG)
                 .show();
 
         // Set up the Text To Speech engine.
-        TextToSpeech.OnInitListener listener =
-                new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(final int status) {
-                        if (status == TextToSpeech.SUCCESS) {
-                            Log.d("OnInitListener", "Text to speech engine started successfully.");
-                            tts.setLanguage(Locale.US);
-                        } else {
-                            Log.d("OnInitListener", "Error starting the text to speech engine.");
-                        }
-                    }
-                };
-        tts = new TextToSpeech(this.getApplicationContext(), listener);
+//        TextToSpeech.OnInitListener listener =
+//                new TextToSpeech.OnInitListener() {
+//                    @Override
+//                    public void onInit(final int status) {
+//                        if (status == TextToSpeech.SUCCESS) {
+//                            Log.d("OnInitListener", "Text to speech engine started successfully.");
+//                            tts.setLanguage(Locale.US);
+//                        } else {
+//                            Log.d("OnInitListener", "Error starting the text to speech engine.");
+//                        }
+//                    }
+//                };
+//        tts = new TextToSpeech(this.getApplicationContext(), listener);
     }
 
     /**
@@ -337,13 +347,13 @@ public final class OcrCaptureActivity extends AppCompatActivity {
      * @param rawY - the raw position of the tap.
      * @return true if the tap was on a TextBlock
      */
-    private boolean onTap(float rawX, float rawY) {
+    private boolean legacyonTap(float rawX, float rawY) {
         OcrGraphic graphic = mGraphicOverlay.getGraphicAtLocation(rawX, rawY);
         TextBlock text = null;
         if (graphic != null) {
             text = graphic.getTextBlock();
             if (text != null && text.getValue() != null) {
-                Log.d(TAG, "text data is being spoken! " + text.getValue());
+                Log.d(TAG, "text data is being processed! " + text.getValue());
                 // Speak the string.
                 tts.speak(text.getValue(), TextToSpeech.QUEUE_ADD, null, "DEFAULT");
             }
@@ -357,11 +367,166 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         return text != null;
     }
 
+    private ArrayList<String> itemList = new ArrayList<>();
+    private ArrayList<Float> priceList = new ArrayList<>();
+    boolean touchOn=true;
+    public static boolean almostEqual(double a, double b, double eps){
+        return Math.abs(a-b)<(eps);
+    }
+
+    public static boolean pointAlmostEqual(Point a, Point b){
+        return almostEqual(a.y,b.y,10);
+    }
+    public static boolean cornerPointAlmostEqual(Point[] rect1, Point[] rect2){
+        boolean almostEqual=true;
+        for (int i=0; i<rect1.length;i++){
+                if (!pointAlmostEqual(rect1[i],rect2[i])){
+                    almostEqual=false;
+                }
+            }
+        return almostEqual;
+    }
+    private boolean onTap(float rawX, float rawY) {
+        String priceRegex = "(\\d+[,.]\\d\\d)";
+        ArrayList<OcrGraphic> graphics = mGraphicOverlay.getAllGraphicsInRow(rawY);
+        OcrGraphic currentGraphics = mGraphicOverlay.getGraphicAtLocation(rawX,rawY);
+        if (graphics !=null && currentGraphics!=null) {
+            List<? extends Text> currentComponents = currentGraphics.getTextBlock().getComponents();
+            final Pattern pattern = Pattern.compile(priceRegex);
+            final Pattern pattern1 = Pattern.compile(priceRegex);
+
+            TextBlock text = null;
+            Log.i("text results", "This many in the row: " + Integer.toString(graphics.size()));
+
+            ArrayList<Text> combinedComponents = new ArrayList<>();
+            for (OcrGraphic graphic : graphics) {
+                if (!graphic.equals(currentGraphics)) {
+                    text = graphic.getTextBlock();
+                    Log.i("text results", text.getValue());
+                    combinedComponents.addAll(text.getComponents());
+                }
+            }
+
+            for (Text currentText : currentComponents) { // goes through components in the row
+                final Matcher matcher = pattern.matcher(currentText.getValue()); // looks for
+                Point[] currentPoint = currentText.getCornerPoints();
+
+                for (Text otherCurrentText : combinedComponents) {//Looks for other components that are in the same row
+                    final Matcher otherMatcher = pattern1.matcher(otherCurrentText.getValue()); // looks for
+                    Point[] innerCurrentPoint = otherCurrentText.getCornerPoints();
+
+                    if (cornerPointAlmostEqual(currentPoint, innerCurrentPoint)) {
+                        if (matcher.find()) { // if you click on the price
+                            Log.i("fuck yes", "Item: " + otherCurrentText.getValue());
+                            Log.i("fuck yes", "Value: " + matcher.group(1));
+                            itemList.add(otherCurrentText.getValue());
+                            priceList.add(Float.valueOf(matcher.group(1)));
+                        }
+                        if (otherMatcher.find()) { // if you click on the item
+                            Log.i("fuck yes", "Item: " + currentText.getValue());
+                            Log.i("fuck yes", "Value: " + otherMatcher.group(1));
+                            itemList.add(currentText.getValue());
+                            priceList.add(Float.valueOf(otherMatcher.group(1)));
+                        }
+                        touchOn=false;
+                        showDialogue();
+
+                    }
+                }
+
+            }
+            return touchOn;
+        }
+        return false;
+    }
+
+    public void showDialogue(){
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setMessage(itemList.toString()+"Are you sure you want to exit?")
+//                .setCancelable(false)
+//                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        receipt receipt = new receipt();
+//                        receipt.setItemNames(itemList);
+//                        receipt.setItemPrices(priceList);
+//                        receipt.saveReceipt(OcrCaptureActivity.this,"lists");
+//                        OcrCaptureActivity.this.finish();
+//                    }
+//                })
+//                .setNegativeButton("Retry", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        itemList = new ArrayList<>();
+//                        priceList = new ArrayList<>();
+//                        dialog.dismiss();
+//                        dialog.cancel();
+//                    }
+//                });
+//        AlertDialog alert = builder.create();
+//        alert.show();
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(OcrCaptureActivity.this);
+        builderSingle.setIcon(R.drawable.camera);
+        builderSingle.setTitle("Select One Name:-");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(OcrCaptureActivity.this, android.R.layout.select_dialog_singlechoice);
+        for(String item: itemList){
+            arrayAdapter.add(item);
+        }
+
+        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                touchOn=true;
+            }
+        });
+
+        builderSingle.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        receipt receipt = new receipt();
+                        receipt.setItemNames(itemList);
+                        receipt.setItemPrices(priceList);
+                        receipt.saveReceipt(OcrCaptureActivity.this,"lists");
+                        OcrCaptureActivity.this.finish();
+                    }
+                });
+
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String strName = arrayAdapter.getItem(which);
+                AlertDialog.Builder builderInner = new AlertDialog.Builder(OcrCaptureActivity.this);
+                builderInner.setMessage(strName);
+                builderInner.setTitle("Your Selected Item is");
+                builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builderInner.show();
+            }
+        });
+        builderSingle.show();
+    }
+
+//    private boolean onTap(){
+//        ArrayList<ArrayList<OcrGraphic>> graphics = mGraphicOverlay.toTable();
+//        String priceRegex = "(.+)(\\W+)(\\d+[,.]\\d\\d)";
+//        final Pattern pattern = Pattern.compile(priceRegex);
+//
+////        final Matcher matcher = pattern.matcher(text);
+//
+//        return true;
+//    }
+
     private class CaptureGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             return onTap(e.getRawX(), e.getRawY()) || super.onSingleTapConfirmed(e);
+//            return onTap() || super.onSingleTapConfirmed(e);
+
         }
     }
 
