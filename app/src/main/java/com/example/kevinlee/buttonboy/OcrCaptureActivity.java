@@ -468,7 +468,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         builderSingle.setIcon(R.drawable.camera);
         builderSingle.setTitle("Select One Name:-");
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(OcrCaptureActivity.this, android.R.layout.select_dialog_singlechoice);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(OcrCaptureActivity.this, android.R.layout.simple_selectable_list_item);
         for(String item: itemList){
             arrayAdapter.add(item);
         }
