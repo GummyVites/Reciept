@@ -35,7 +35,27 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".cropper" />
         <activity android:name=".payment" />
-        <activity android:name=".venmoPay" />
+        <activity android:name=".venmoPay"/>
+        <activity android:name=".OcrCaptureActivity"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths">
+            </meta-data>
+
+            <meta-data
+                android:name="com.google.android.gms.version"
+                android:value="@integer/google_play_services_version" />
+            <meta-data
+                android:name="com.google.android.gms.vision.DEPENDENCIES"
+                android:value="ocr" />
+        </provider>
+
         <activity android:name=".tabbedFriends"></activity>
     </application>
 
