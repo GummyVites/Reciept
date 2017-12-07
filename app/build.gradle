@@ -37,7 +37,7 @@ dependencies {
     implementation 'com.hold1:pagertabindicator:1.0.7'
     compile 'com.google.android.gms:play-services-vision:9.4.0+'
     compile 'com.android.support:design:26.1.0'
-
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
     testCompile 'junit:junit:4.12'
 }
