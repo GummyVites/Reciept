@@ -116,7 +116,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         gestureDetector = new GestureDetector(this, new CaptureGestureListener());
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
 
-        Snackbar.make(mGraphicOverlay, "Tap to Capture. Pinch/Stretch to zoom",
+        Snackbar.make(mGraphicOverlay, "Tap to Capture",
                 Snackbar.LENGTH_LONG)
                 .show();
 
