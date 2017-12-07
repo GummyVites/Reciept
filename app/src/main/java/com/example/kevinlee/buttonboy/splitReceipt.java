@@ -56,7 +56,7 @@ public class splitReceipt extends AppCompatActivity   {
                 }
 //                Toast toast = Toast.makeText(v.getContext(), friendsList.get(0).money.toString() , Toast.LENGTH_SHORT);
 //                toast.show();
-                Intent i = new Intent(splitReceipt.this,payment.class);
+                Intent i = new Intent(splitReceipt.this,tabbedFriends.class);
                 i.putExtra("friendsLists", friendsList);
                 startActivity(i);
                 finish();

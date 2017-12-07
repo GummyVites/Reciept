@@ -6,13 +6,16 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.kevinlee.buttonboy.Model.Model;
 import com.example.kevinlee.buttonboy.R;
 import com.example.kevinlee.buttonboy.TabViewItem;
+import com.example.kevinlee.buttonboy.friends;
 import com.hold1.pagertabsindicator.TabViewProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +23,12 @@ import java.util.List;
  */
 
 public class customViewPagerAdapter extends PagerAdapter implements TabViewProvider.CustomView {
-
+    private ArrayList<friends> list = new ArrayList<friends>();
     List<Model>models;
     Context context;
 
-    public customViewPagerAdapter(List<Model> models, Context context) {
+    public customViewPagerAdapter(List<Model> models, ArrayList<friends> list, Context context) {
+        this.list = list;
         this.models = models;
         this.context = context;
     }
@@ -55,7 +59,15 @@ public class customViewPagerAdapter extends PagerAdapter implements TabViewProvi
         View itemView = inflater.inflate(R.layout.layout_item,container,false);
 
         TextView textView = (TextView) itemView.findViewById(R.id.txtTextView);
-        textView.setText(models.get(position).getTitle());
+        textView.setText(list.get(position).name+"'s total is"+" "+list.get(position).money.toString());
+
+//        Button venmoUrl = (Button) itemView.findViewById(R.id.payment);
+//        venmoUrl.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         container.addView(itemView);
         return itemView;
