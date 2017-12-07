@@ -202,8 +202,8 @@ public class OCRActivity extends AppCompatActivity {
 
 //        Bitmap bitmap = getIntent().getParcelableExtra("bitmap");
 
-//        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.receipt1);
-        String temp = TessOCR.getOCRResult(bitmap);
+        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.receipt1);
+        String temp = TessOCR.getOCRResult(image);
         textParser parser = new textParser(temp);
 
         ArrayList<String> itemList = parser.getItemList();
