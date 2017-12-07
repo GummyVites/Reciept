@@ -38,7 +38,7 @@ import android.app.Activity;
 import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
 
-
+//deprecated
 public class OCRActivity extends AppCompatActivity {
     public ImageView mImage;
     public Uri photoURI;
