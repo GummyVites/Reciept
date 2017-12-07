@@ -18,12 +18,17 @@ package com.example.kevinlee.buttonboy;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.vision.CameraSource;
+import com.google.android.gms.vision.text.TextBlock;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -176,19 +181,58 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
             return null;
         }
     }
-    public ArrayList<T> getAllGraphicinRow(float rawX, float rawY) {
+    public ArrayList<T> getAllGraphicsInRow(float rawY) {
         synchronized (mLock) {
             ArrayList<T> row = new ArrayList<>();
             // Get the position of this View so the raw location can be offset relative to the view.
             int[] location = new int[2];
             this.getLocationOnScreen(location);
             for (T graphic : mGraphics) {
-                if (graphic.contains(rawX - location[0], rawY - location[1])) {
-                    row.add(graphic);
+                float rawX = this.getWidth();
+                for (int i=0; i<rawX; i+=10){
+                    if (graphic.contains(i - location[0], rawY - location[1])) {
+                        if(!row.contains(graphic)) {
+                            row.add(graphic);
+                        }
+                    }
                 }
             }
-            return null;
+            return row;
         }
+    }
+    public ArrayList<T> getAllGraphicsInColumn(float rawX) {
+        synchronized (mLock) {
+            ArrayList<T> row = new ArrayList<>();
+            // Get the position of this View so the raw location can be offset relative to the view.
+            int[] location = new int[2];
+            this.getLocationOnScreen(location);
+            for (T graphic : mGraphics) {
+                float rawY = this.getHeight();
+                for (int i=0; i<rawY; i+=10){
+                    if (graphic.contains(rawX - location[0], i - location[1])) {
+                        if(!row.contains(graphic)) {
+                            row.add(graphic);
+                        }
+                    }
+                }
+            }
+            return row;
+        }
+    }
+    public ArrayList<ArrayList<T>> toTable(){
+
+            // Get the position of this View so the raw location can be offset relative to the view.
+            ArrayList<ArrayList<T>> table = new ArrayList<>();
+            String fullstring="";
+            int[] location = new int[2];
+            this.getLocationOnScreen(location);
+                float height = this.getHeight();
+                for(int y=0; y<height; y+=10){
+                    table.add(getAllGraphicsInRow(y));
+                }
+
+
+            return table;
     }
 
     public Set<T> getAllGraphics(){

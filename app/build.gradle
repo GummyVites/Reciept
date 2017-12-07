@@ -33,7 +33,7 @@ dependencies {
     compile 'com.theartofdev.edmodo:android-image-cropper:2.5.+'
     compile 'com.soundcloud.android:android-crop:1.0.1@aar'
     compile 'com.android.support:support-v4:26.1.0'
-    compile 'com.google.android.gms:play-services-vision:9.4.0+'
+    compile 'com.google.android.gms:play-services-vision:11.6.2'
     compile 'com.android.support:design:26.1.0'
     implementation 'com.hold1:pagertabindicator:1.0.5'
 

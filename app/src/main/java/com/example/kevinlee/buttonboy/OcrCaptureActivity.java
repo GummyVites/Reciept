@@ -25,6 +25,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,13 +44,19 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Activity for the Ocr Detecting app.  This app detects text and displays the value with the
@@ -347,7 +354,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
             if (text != null && text.getValue() != null) {
                 Log.d(TAG, "text data is being processed! " + text.getValue());
                 // Speak the string.
-//                tts.speak(text.getValue(), TextToSpeech.QUEUE_ADD, null, "DEFAULT");
+                tts.speak(text.getValue(), TextToSpeech.QUEUE_ADD, null, "DEFAULT");
             }
             else {
                 Log.d(TAG, "text data is null");
@@ -359,29 +366,88 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         return text != null;
     }
 
-//    private boolean onTapRow(float rawX, float rawY){
-//
-//    }
-    private boolean onTap() {
-        Set<OcrGraphic> graphics = mGraphicOverlay.getAllGraphics();
-        TextBlock text = null;
-        Iterator<OcrGraphic> graphic = graphics.iterator();
-        while (graphic.hasNext()){
-            text=graphic.next().getTextBlock();
-            Log.i("text results",text.getValue());
-            if (text == null){
-                return text !=null;
-            }
-        }
-        return true;
+    private ArrayList<String> itemList = new ArrayList<>();
+    private ArrayList<Float> priceList = new ArrayList<>();
+
+    public static boolean almostEqual(double a, double b, double eps){
+        return Math.abs(a-b)<(eps);
     }
+
+    public static boolean pointAlmostEqual(Point a, Point b){
+        return almostEqual(a.y,b.y,10);
+    }
+    public static boolean cornerPointAlmostEqual(Point[] rect1, Point[] rect2){
+        boolean almostEqual=true;
+        for (int i=0; i<rect1.length;i++){
+                if (!pointAlmostEqual(rect1[i],rect2[i])){
+                    almostEqual=false;
+                }
+            }
+        return almostEqual;
+    }
+    private boolean onTap(float rawX, float rawY) {
+        String priceRegex = "(\\d+[,.]\\d\\d)";
+        ArrayList<OcrGraphic> graphics = mGraphicOverlay.getAllGraphicsInRow(rawY);
+        OcrGraphic currentGraphics = mGraphicOverlay.getGraphicAtLocation(rawX,rawY);
+        if (graphics !=null && currentGraphics!=null) {
+            List<? extends Text> currentComponents = currentGraphics.getTextBlock().getComponents();
+            final Pattern pattern = Pattern.compile(priceRegex);
+            final Pattern pattern1 = Pattern.compile(priceRegex);
+
+            TextBlock text = null;
+            Log.i("text results", "This many in the row: " + Integer.toString(graphics.size()));
+
+            ArrayList<Text> combinedComponents = new ArrayList<>();
+            for (OcrGraphic graphic : graphics) {
+                if (!graphic.equals(currentGraphics)) {
+                    text = graphic.getTextBlock();
+                    Log.i("text results", text.getValue());
+                    combinedComponents.addAll(text.getComponents());
+                }
+            }
+
+            for (Text currentText : currentComponents) { // goes through components in the row
+                final Matcher matcher = pattern.matcher(currentText.getValue()); // looks for
+                Point[] currentPoint = currentText.getCornerPoints();
+
+                for (Text otherCurrentText : combinedComponents) {//Looks for other components that are in the same row
+                    final Matcher otherMatcher = pattern1.matcher(otherCurrentText.getValue()); // looks for
+                    Point[] innerCurrentPoint = otherCurrentText.getCornerPoints();
+
+                    if (cornerPointAlmostEqual(currentPoint, innerCurrentPoint)) {
+                        if (matcher.find()) { // if you click on the price
+                            Log.i("fuck yes", "Item: " + otherCurrentText.getValue());
+                            Log.i("fuck yes", "Value: " + matcher.group(1));
+                        }
+                        if (otherMatcher.find()) { // if you click on the item
+                            Log.i("fuck yes", "Item: " + currentText.getValue());
+                            Log.i("fuck yes", "Value: " + otherMatcher.group(1));
+                        }
+                    }
+                }
+
+            }
+            return true;
+        }
+        return false;
+    }
+
+//    private boolean onTap(){
+//        ArrayList<ArrayList<OcrGraphic>> graphics = mGraphicOverlay.toTable();
+//        String priceRegex = "(.+)(\\W+)(\\d+[,.]\\d\\d)";
+//        final Pattern pattern = Pattern.compile(priceRegex);
+//
+////        final Matcher matcher = pattern.matcher(text);
+//
+//        return true;
+//    }
 
     private class CaptureGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
-//            return onTap(e.getRawX(), e.getRawY()) || super.onSingleTapConfirmed(e);
-            return onTap() || super.onSingleTapConfirmed(e);
+            return onTap(e.getRawX(), e.getRawY()) || super.onSingleTapConfirmed(e);
+//            return onTap() || super.onSingleTapConfirmed(e);
 
         }
     }
