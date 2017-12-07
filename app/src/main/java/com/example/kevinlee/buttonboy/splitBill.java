@@ -3,16 +3,20 @@ package com.example.kevinlee.buttonboy;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -35,9 +39,7 @@ public class splitBill extends AppCompatActivity {
 
         friendsList  = new ArrayList<friends>();
         list = new ArrayList<receipt>();
-        String[] names = {"Baiwen Huang", "Kevin Lee", "Shyaan Khan", "Chris Evans",
-                "Person 1", "Person 2", "Person 3", "Person 4",
-                "Person 5", "Person 6", "Person 7"};
+        String[] names = {};
         for (int i = 0; i < names.length; ++i){
             receipt temp = new receipt();
             temp.name = names[i];
@@ -57,22 +59,53 @@ public class splitBill extends AppCompatActivity {
         ListView lView = (ListView) findViewById(R.id.listview);
         lView.setAdapter(adapter);
 
-        Button nextBtn = (Button) findViewById(R.id.nextBtn);
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), splitReceipt.class);
-                for(int x = 0; x < friendsList.size(); x++)
-                {
-                    System.out.println(friendsList.get(x));
-                }
+//        Button nextBtn = (Button) findViewById(R.id.nextBtn);
+//        nextBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(getApplicationContext(), splitReceipt.class);
+//                for(int x = 0; x < friendsList.size(); x++)
+//                {
+//                    System.out.println(friendsList.get(x));
+//                }
+//                if (friendsList.size()!= 0) {
+//                    i.putExtra("friendsList", friendsList);
+//                    //list.get(position).saveReceipt(context,"receipt");
+//                    startActivity(i);
+//                    finish();
+//                }else{
+//                    Toast toast = Toast.makeText(splitBill.this, "Please select friends" , Toast.LENGTH_SHORT);
+//                    toast.show();
+//                }
+//            }
+//        });
 
-                i.putExtra("friendsList", friendsList);
-                //list.get(position).saveReceipt(context,"receipt");
-                startActivity(i);
-                finish();
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_next:
+                        Intent i = new Intent(getApplicationContext(), splitReceipt.class);
+                        for(int x = 0; x < friendsList.size(); x++)
+                        {
+                            System.out.println(friendsList.get(x));
+                        }
+                        if (friendsList.size()!= 0) {
+                            i.putExtra("friendsList", friendsList);
+                            //list.get(position).saveReceipt(context,"receipt");
+                            startActivity(i);
+                            finish();
+                        }else{
+                            Toast toast = Toast.makeText(splitBill.this, "Please select friends" , Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                        break;
+                }
+                return true;
             }
         });
+
 
         EditText newFriend =  (EditText) findViewById(R.id.friendName);
         newFriend.setOnEditorActionListener(new TextView.OnEditorActionListener(){
@@ -81,6 +114,7 @@ public class splitBill extends AppCompatActivity {
                 boolean handled = false;
                 if (i== EditorInfo.IME_ACTION_DONE) {
                     String inputText = textView.getText().toString();
+
 
                     receipt temp = new receipt();
                     temp.name = inputText;
@@ -101,6 +135,7 @@ public class splitBill extends AppCompatActivity {
                     InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     handled = true;
+
                 }
                 return handled;
             }
@@ -109,7 +144,7 @@ public class splitBill extends AppCompatActivity {
 
     public void selectedFriend(View view) {
 
-        RadioButton checkFriends = (RadioButton) view.findViewById(R.id.checkFriend);
+        CheckBox checkFriends = (CheckBox) view.findViewById(R.id.checkFriend);
         friends temp = new friends(checkFriends.getText().toString());
         temp.money = new Float(0);
         temp.selectedItems = new ArrayList<item>();

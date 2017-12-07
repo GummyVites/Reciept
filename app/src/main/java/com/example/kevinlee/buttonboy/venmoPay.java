@@ -1,5 +1,6 @@
 package com.example.kevinlee.buttonboy;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,7 +25,9 @@ public class venmoPay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venmo_pay);
-
+        Intent tempIntent = getIntent();
+        String name = tempIntent.getStringExtra("PayerName");
+        Float money = tempIntent.getFloatExtra("totalMoney",0);
         wv = (WebView) findViewById(R.id.wv);
         //enable javascript
         wv.getSettings().setJavaScriptEnabled(true);
@@ -37,7 +40,7 @@ public class venmoPay extends AppCompatActivity {
         wv.getSettings().setDatabaseEnabled(true);
         wv.getSettings().setAppCacheEnabled(true);
         wv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        String url = "https://venmo.com/?txn=charge&amount=24.25&note=for+dinner&recipients=hamilton@venmo.com,646.863.9557,john";
+        String url = "https://venmo.com/?txn=charge&amount="+money+"&note=for+dinner&recipients="+name;
         wv.loadUrl(url);
         wv.setWebViewClient(new WebViewClient());
     }

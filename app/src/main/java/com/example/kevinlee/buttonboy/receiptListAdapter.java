@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -54,8 +55,8 @@ public class receiptListAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.list_item, null);
         }
 
-        RadioButton checkFriends = (RadioButton) view.findViewById(R.id.checkFriend);
-        checkFriends.setTextColor(Color.WHITE);
+        CheckBox checkFriends = (CheckBox) view.findViewById(R.id.checkFriend);
+        checkFriends.setTextColor(Color.BLACK);
         checkFriends.setText(list.get(position).name);
 
 

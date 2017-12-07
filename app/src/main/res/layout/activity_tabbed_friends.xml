@@ -13,7 +13,8 @@
         app:layout_constraintBottom_toTopOf="@+id/tabs_indicator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <com.hold1.pagertabsindicator.PagerTabsIndicator
         android:id="@+id/tabs_indicator"
@@ -27,6 +28,9 @@
         app:tab_indicator="bottom_bar"
         app:tab_indicator_scale_type="centerInside"
         app:tab_lock_expanded="true"
+        app:tab_indicator_color="#1C4960"
+        app:tab_highlight_text_color="#1C4960"
+        tab_text_color="#1C4960"
         />
 
 </android.support.constraint.ConstraintLayout>

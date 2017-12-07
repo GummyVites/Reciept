@@ -58,17 +58,6 @@ public class recieptItemAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.receipt_item, null);
         }
 
-        /*ArrayList<friends> myFriends = new ArrayList<friends>();
-        friends Baiwen = new friends("Baiwen");
-        friends Kevin = new friends("Kevin");
-        friends Shyaan = new friends("Shyaan");
-        friends Chris = new friends("Chris");
-        myFriends.add(Baiwen);
-        myFriends.add(Kevin);
-        myFriends.add(Shyaan);
-        myFriends.add(Chris);*/
-
-
         friendsSelectorAdapter friendsSelectorAdapter = new friendsSelectorAdapter(list.get(position),friendsList, context);
 
         ListView friendsList = (ListView)view.findViewById(R.id.friend_selector);
@@ -76,11 +65,11 @@ public class recieptItemAdapter extends BaseAdapter implements ListAdapter {
 
         //Handle TextView and display string from your list
         final TextView itemCost = (TextView)view.findViewById(R.id.item_cost);
-        itemCost.setTextColor(Color.GRAY);
+        itemCost.setTextColor(Color.BLACK);
         itemCost.setText("$" + list.get(position).cost.toString());
 
         final TextView itemName = (TextView) view.findViewById(R.id.item_name);
-        itemName.setTextColor(Color.GRAY);
+        itemName.setTextColor(Color.BLACK);
         itemName.setText(list.get(position).name);
 
         itemName.setOnClickListener(new View.OnClickListener() {

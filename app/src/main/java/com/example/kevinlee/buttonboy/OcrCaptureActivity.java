@@ -418,11 +418,19 @@ public final class OcrCaptureActivity extends AppCompatActivity {
                         if (matcher.find()) { // if you click on the price
                             Log.i("fuck yes", "Item: " + otherCurrentText.getValue());
                             Log.i("fuck yes", "Value: " + matcher.group(1));
+                            itemList.add(otherCurrentText.getValue());
+                            priceList.add(Float.valueOf(matcher.group(1)));
                         }
                         if (otherMatcher.find()) { // if you click on the item
                             Log.i("fuck yes", "Item: " + currentText.getValue());
                             Log.i("fuck yes", "Value: " + otherMatcher.group(1));
+                            itemList.add(currentText.getValue());
+                            priceList.add(Float.valueOf(otherMatcher.group(1)));
                         }
+                        receipt receipt = new receipt();
+                        receipt.setItemNames(itemList);
+                        receipt.setItemPrices(priceList);
+                        receipt.saveReceipt(OcrCaptureActivity.this,"lists");
                     }
                 }
 
