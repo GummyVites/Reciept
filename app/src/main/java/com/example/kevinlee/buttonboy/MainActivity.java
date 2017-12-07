@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                         switch (index) {
                             // Camera
                             case 0:
-                                startActivity(new Intent(MainActivity.this, OCRActivity.class));
+                                startActivity(new Intent(MainActivity.this, OcrCaptureActivity.class));
                                 break;
                             //paypal
                             case 1:
