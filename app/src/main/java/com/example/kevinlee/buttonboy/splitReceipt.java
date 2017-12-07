@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -79,7 +81,36 @@ public class splitReceipt extends AppCompatActivity   {
                 switch (item.getItemId()){
 
                     case R.id.action_add:
-                        Toast.makeText(splitReceipt.this,"Action add Clicked",Toast.LENGTH_SHORT);
+                        AlertDialog.Builder mBuilder = new AlertDialog.Builder(splitReceipt.this);
+                        View mView = getLayoutInflater().inflate(R.layout.dialog_login, null);
+                        final EditText itemName = (EditText) mView.findViewById(R.id.addName);
+                        final EditText itemPrice = (EditText) mView.findViewById(R.id.addPrice);
+                        Button mLogin = (Button) mView.findViewById(R.id.addItemButton);
+                        mBuilder.setView(mView);
+                        final AlertDialog dialog = mBuilder.create();
+                        dialog.show();
+                        mLogin.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if(!itemName.getText().toString().isEmpty() && !itemPrice.getText().toString().isEmpty()){
+                                    String newItem = itemName.getText().toString();
+                                    String newPrice = itemPrice.getText().toString();
+                                    item temp = new item();
+                                    temp.name=newItem;
+                                    temp.cost=Float.valueOf(newPrice);
+                                    items.add(temp);
+                                    Toast.makeText(splitReceipt.this,
+                                            R.string.success_msg,
+                                            Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }else{
+                                    Toast.makeText(splitReceipt.this,
+                                            R.string.error_msg,
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
                         break;
 
                     case R.id.action_remove:
