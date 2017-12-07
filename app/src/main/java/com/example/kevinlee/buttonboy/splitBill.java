@@ -111,15 +111,13 @@ public class splitBill extends AppCompatActivity {
         });
 
 
-        EditText newFriend =  (EditText) findViewById(R.id.friendName);
+        final EditText newFriend =  (EditText) findViewById(R.id.friendName);
         newFriend.setOnEditorActionListener(new TextView.OnEditorActionListener(){
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent){
                 boolean handled = false;
                 if (i== EditorInfo.IME_ACTION_DONE) {
                     String inputText = textView.getText().toString();
-
-
                     receipt temp = new receipt();
                     temp.name = inputText;
                     temp.itemPrices = new ArrayList<Float>();
@@ -130,9 +128,7 @@ public class splitBill extends AppCompatActivity {
                     }
 
                     list.add(temp);
-
                     receiptListAdapter adapter = new receiptListAdapter(list, splitBill.this);
-
                     //handle listview and assign adapter
                     ListView lView = (ListView) findViewById(R.id.listview);
                     lView.setAdapter(adapter);
@@ -140,6 +136,8 @@ public class splitBill extends AppCompatActivity {
                     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     handled = true;
 
+                    newFriend.setText("");
+                    newFriend.setHint("Add venmo username");
                 }
                 return handled;
             }
