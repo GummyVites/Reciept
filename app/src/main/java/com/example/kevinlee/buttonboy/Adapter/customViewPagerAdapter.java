@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import com.example.kevinlee.buttonboy.payment;
 import com.example.kevinlee.buttonboy.venmoPay;
 import com.hold1.pagertabsindicator.TabViewProvider;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +74,16 @@ public class customViewPagerAdapter extends PagerAdapter implements TabViewProvi
                 Intent intent = new Intent(context, venmoPay.class);
                 intent.putExtra("totalMoney",list.get(position).money);
                 intent.putExtra("PayerName",list.get(position).name);
-                context.startActivity(intent);
+                try {
+                    FileOutputStream fos =getActivity().openFileOutput("friendList", getActivity().MODE_PRIVATE);
+                    ObjectOutputStream oos = new ObjectOutputStream(fos);
+                    oos.writeObject(list);
+                    oos.close();
+                    context.startActivity(intent);
+                } catch (Exception e) {
+                    Log.e("Payment","File Error.");
+                    context.startActivity(intent);
+                }
 
             }
         });
@@ -93,5 +105,9 @@ public class customViewPagerAdapter extends PagerAdapter implements TabViewProvi
     @Override
     public View getView(int i) {
         return new TabViewItem(context,models.get(i).getTitle(),models.get(i).getId(),0xFF353535,0xFFFF0000);
+    }
+
+    public Context getActivity() {
+        return context;
     }
 }
