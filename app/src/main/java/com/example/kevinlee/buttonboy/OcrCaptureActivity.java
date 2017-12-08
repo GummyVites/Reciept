@@ -428,14 +428,19 @@ public final class OcrCaptureActivity extends AppCompatActivity {
                             itemList.add(currentText.getValue());
                             priceList.add(Float.valueOf(otherMatcher.group(1)));
                         }
-                        touchOn=false;
-                        showDialogue();
-
+//                        touchOn=false;
+//                        showDialogue();
+                        receipt receipt = new receipt();
+                        receipt.setItemNames(itemList);
+                        receipt.setItemPrices(priceList);
+                        receipt.saveReceipt(OcrCaptureActivity.this,"lists");
+                        Toast toast = Toast.makeText(this,  " Text Captured!" , Toast.LENGTH_SHORT);
+                        toast.show();
                     }
                 }
 
             }
-            return touchOn;
+            return true;
         }
         return false;
     }
@@ -501,7 +506,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
                 builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog,int which) {
-                        dialog.dismiss();
+//                        dialog.dismiss();
                     }
                 });
                 builderInner.show();

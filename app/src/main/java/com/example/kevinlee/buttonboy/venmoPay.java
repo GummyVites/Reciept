@@ -40,7 +40,7 @@ public class venmoPay extends AppCompatActivity {
         wv.getSettings().setDatabaseEnabled(true);
         wv.getSettings().setAppCacheEnabled(true);
         wv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        String url = "https://venmo.com/?txn=charge&amount="+money+"&note=for+dinner&recipients="+name;
+        String url = "https://venmo.com/?txn=charge&amount="+money+"&note=&recipients="+name;
         wv.loadUrl(url);
         wv.setWebViewClient(new WebViewClient());
     }
