@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             //piechart
                             case 4:
+                                startActivity(new Intent(MainActivity.this, dataViz.class));
                                 break;
                             //screenshot
                             case 5:

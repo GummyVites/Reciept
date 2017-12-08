@@ -58,6 +58,7 @@
         </provider>
 
         <activity android:name=".tabbedFriends"></activity>
+        <activity android:name=".dataViz"></activity>
     </application>
 
 </manifest>
